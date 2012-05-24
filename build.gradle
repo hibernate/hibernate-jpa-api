@@ -1,0 +1,69 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'uploadAuth'
+
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        mavenRepo name: 'jboss-nexus', url: "https://repository.jboss.org/nexus/content/groups/public/"
+    }
+    dependencies {
+        classpath 'org.hibernate.build.gradle:gradle-upload-auth-plugin:1.1.1'
+    }
+}
+
+repositories {
+    // needed to resolve the maven webdav wagon provider
+    mavenCentral()
+}
+
+configurations {
+    // classpath config used for maven deployers (wagon providers)
+    mavenDeployers
+}
+
+dependencies {
+    mavenDeployers 'org.apache.maven.wagon:wagon-webdav:1.0-beta-2'
+}
+
+group = 'org.hibernate.javax.persistence'
+version = '1.0.0-SNAPSHOT'
+
+// gradle uses 'build/' by default
+buildDirName = "target"
+
+manifest.mainAttributes(
+        provider: 'gradle',
+        'Built-By': 'Hibernate.org',
+        'Specification-Title': 'Java Persistence API, Version 2.1',
+        'Specification-Version': '2.1',
+        'Specification-Vendor': 'Oracle, Inc.',
+        'Implementation-Version': version,
+        'Implementation-Vendor': 'hibernate.org',
+        'Implementation-Title': 'Java Persistence API'
+)
+
+// create the javadoc jar
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+artifacts {
+    // add the javadoc jar to the archives configuration to get it uploaded properly
+    archives javadocJar
+}
+
+if ( !hasProperty('jbossReleaseRepositoryRoot') ) {
+    jbossReleaseRepositoryRoot = '/tmp'
+}
+uploadArchives {
+    repositories {
+        deployer = mavenDeployer {
+            configuration = configurations.mavenDeployers
+            repository(url: "file://${jbossReleaseRepositoryRoot}")
+            snapshotRepository(url: "dav:https://snapshots.jboss.org/maven2")
+        }
+    }
+}
