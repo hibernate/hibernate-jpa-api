@@ -1,7 +1,3 @@
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'uploadAuth'
-
 buildscript {
     repositories {
         mavenCentral()
@@ -13,6 +9,10 @@ buildscript {
     }
 }
 
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'uploadAuth'
+
 repositories {
     // needed to resolve the maven webdav wagon provider
     mavenCentral()
@@ -20,11 +20,11 @@ repositories {
 
 configurations {
     // classpath config used for maven deployers (wagon providers)
-    mavenDeployers
+    deployerJars
 }
 
 dependencies {
-    mavenDeployers 'org.apache.maven.wagon:wagon-webdav:1.0-beta-2'
+    deployerJars 'org.apache.maven.wagon:wagon-webdav:1.0-beta-2'
 }
 
 group = 'org.hibernate.javax.persistence'
@@ -55,15 +55,26 @@ artifacts {
     archives javadocJar
 }
 
-if ( !hasProperty('jbossReleaseRepositoryRoot') ) {
-    jbossReleaseRepositoryRoot = '/tmp'
-}
 uploadArchives {
     repositories {
         deployer = mavenDeployer {
-            configuration = configurations.mavenDeployers
-            repository(url: "file://${jbossReleaseRepositoryRoot}")
-            snapshotRepository(url: "dav:https://snapshots.jboss.org/maven2")
+            name = 'jbossDeployer'
+            configuration = configurations.deployerJars
+            repository(id: "jboss-releases-repository", url: "https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/")
+            snapshotRepository(id: "jboss-snapshots-repository", url: "https://repository.jboss.org/nexus/content/repositories/snapshots")
+            pom.project {
+                licenses {
+                    license {
+                        name 'Eclipse Public License (EPL), Version 1.0'
+                        url 'http://www.eclipse.org/legal/epl-v10.html'
+                        distribution 'repo'
+                    }
+                    license {
+                        name 'Eclipse Distribution License (EDL), Version 1.0'
+                        url 'http://www.eclipse.org/org/documents/edl-v10.php'
+                    }
+                }
+            }
         }
     }
 }
