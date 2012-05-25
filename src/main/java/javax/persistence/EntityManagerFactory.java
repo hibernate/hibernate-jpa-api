@@ -133,4 +133,49 @@ public interface EntityManagerFactory {
      * @since Java Persistence 2.0
      */
     public PersistenceUnitUtil getPersistenceUnitUtil();
+
+	/**
+	 * Define the query, typed query, or stored procedure query as
+	 * a named query such that future query objects can be created
+	 * from it using the createNamedQuery methods.
+	 * Any configuration of the query object (except for actual
+	 * parameter binding) in effect when the named query is added
+	 * is retained as part of the named query definition.
+	 * This includes configuration information such as max results,
+	 * hints, flush mode, lock mode, result set mapping information,
+	 * and information about stored procedure parameters.
+	 * When the query is executed, information that can be set
+	 * by means of the Query API can be overridden. Information
+	 * that is overridden does not affect the named query as
+	 * registered with the entity manager factory, and thus does
+	 * not affect subsequent query objects created from it by
+	 * means of the createNamedQuery method.
+	 * If a named query of the same name has been previously
+	 * defined, either statically via metadata or via this method,
+	 * that query definition is replaced.
+	 *
+	 * @param name name for the query
+	 * @param query Query, TypedQuery, or StoredProcedureQuery object
+	 *
+	 * @since Java Persistence 2.1
+	 */
+	public void addNamedQuery(String name, Query query);
+
+	/**
+	 * Return an object of the specified type to allow access to the
+	 * provider-specific API. If the provider's EntityManagerFactory
+	 * implementation does not support the specified class, the
+	 * PersistenceException is thrown.
+	 *
+	 * @param cls the class of the object to be returned. This is
+	 * normally either the underlying EntityManagerFactory
+	 * implementation class or an interface that it implements.
+	 *
+	 * @return an instance of the specified class
+	 *
+	 * @throws PersistenceException if the provider does not
+	 * support the call
+	 */
+	public <T> T unwrap(Class<T> cls);
+
 }

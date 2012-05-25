@@ -18,6 +18,8 @@
 package javax.persistence;
 
 import java.util.Map;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.metamodel.Metamodel;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -557,7 +559,26 @@ public interface EntityManager {
      */
     public <T> TypedQuery<T> createQuery(CriteriaQuery<T> criteriaQuery);
 
-    /**
+	/**
+	 * Create an instance of Query for executing a criteria
+	 * update query.
+	 *
+	 * @param updateQuery a criteria update query object
+	 * @return the new query instance
+	 * @throws IllegalArgumentException if the update query is found to be invalid
+	 */
+	public Query createQuery(CriteriaUpdate updateQuery);
+
+	/**
+	 * Create an instance of Query for executing a criteria
+	 * delete query.
+	 * @param deleteQuery a criteria delete query object
+	 * @return the new query instance
+	 * @throws IllegalArgumentException if the delete query isfound to be invalid
+	 */
+	public Query createQuery(CriteriaDelete deleteQuery);
+
+	/**
      * Create an instance of <code>TypedQuery</code> for executing a
      * Java Persistence query language statement.
      * The select list of the query must contain only a single
@@ -627,7 +648,90 @@ public interface EntityManager {
      */
     public Query createNativeQuery(String sqlString, String resultSetMapping);
 
-    /**
+	/**
+	 * Create an instance of StoredProcedureQuery for executing a
+	 * stored procedure in the database.
+	 *
+	 * @param name name assigned to the stored procedure query
+	 * in metadata
+	 *
+	 * @return the new stored procedure query instance
+	 *
+	 * @throws IllegalArgumentException if a query has not been
+	 * defined with the given name
+	 */
+	public StoredProcedureQuery createNamedStoredProcedureQuery(
+			String name);
+
+	/**
+	 * Create an instance of StoredProcedureQuery for executing a
+	 * stored procedure in the database.
+	 * Parameters must be registered before the stored procedure can
+	 * be executed.
+	 * If the stored procedure returns one or more result sets,
+	 * any result set will be returned as a list of type Object[].
+	 *
+	 * @param procedureName name of the stored procedure in the
+	 * database
+	 *
+	 * @return the new stored procedure query instance
+	 *
+	 * @throws IllegalArgumentException if a stored procedure of the
+	 * given name does not exist (or the query execution
+	 * will fail)
+	 */
+	public StoredProcedureQuery createStoredProcedureQuery(
+			String procedureName);
+
+	/**
+	 * Create an instance of StoredProcedureQuery for executing a
+	 * stored procedure in the database.
+	 * Parameters must be registered before the stored procedure can
+	 * be executed.
+	 * The resultClass arguments must be specified in the order in
+	 * which the result sets will be returned by the stored procedure
+	 * invocation.
+	 *
+	 * @param procedureName name of the stored procedure in the
+	 * database
+	 * @param resultClasses classes to which the result sets
+	 * produced by the stored procedure are to
+	 * be mapped
+	 *
+	 * @return the new stored procedure query instance
+	 *
+	 * @throws IllegalArgumentException if a stored procedure of the
+	 * given name does not exist (or the query execution
+	 * will fail)
+	 */
+	public StoredProcedureQuery createStoredProcedureQuery(
+			String procedureName, Class... resultClasses);
+
+	/**
+	 * Create an instance of StoredProcedureQuery for executing a
+	 * stored procedure in the database.
+	 * Parameters must be registered before the stored procedure can
+	 * be executed.
+	 * The resultSetMapping arguments must be specified in the order
+	 * in which the result sets will be returned by the stored
+	 * procedure invocation.
+	 *
+	 * @param procedureName name of the stored procedure in the
+	 * database
+	 * @param resultSetMappings the names of the result set mappings
+	 * to be used in mapping result sets
+	 * returned by the stored procedure
+	 *
+	 * @return the new stored procedure query instance
+	 *
+	 * @throws IllegalArgumentException if a stored procedure or
+	 * result set mapping of the given name does not exist
+	 * (or the query execution will fail)
+	 */
+	public StoredProcedureQuery createStoredProcedureQuery(
+			String procedureName, String... resultSetMappings);
+
+	/**
      * Indicate to the entity manager that a JTA transaction is
      * active. This method should be called on a JTA application
      * managed entity manager that was created outside the scope
@@ -638,7 +742,16 @@ public interface EntityManager {
      */
     public void joinTransaction();
 
-    /**
+	/**
+	 * Determine whether the entity manager is joined to the
+	 * current transaction. Returns false if the entity manager
+	 * is not joined to the current transaction or if no
+	 * transaction is active
+	 * @return boolean
+	 */
+	public boolean isJoinedToTransaction();
+
+	/**
      * Return an object of the specified type to allow access to the
      * provider-specific API.   If the provider's <code>EntityManager</code>
      * implementation does not support the specified class, the

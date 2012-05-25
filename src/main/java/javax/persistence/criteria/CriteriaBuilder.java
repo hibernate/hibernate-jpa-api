@@ -62,6 +62,27 @@ public interface CriteriaBuilder {
 	CriteriaQuery<Tuple> createTupleQuery();
 
 
+	// methods to construct queries for bulk updates and deletes:
+
+	/**
+	 * Create a query object to perform a bulk update operation.
+	 *
+	 * @param targetEntity target type for update operation
+	 *
+	 * @return the query object
+	 */
+	<T> CriteriaUpdate<T> createCriteriaUpdate(Class<T> targetEntity);
+
+	/**
+	 * Create a query object to perform a bulk delete operation.
+	 *
+	 * @param targetEntity target type for delete operation
+	 *
+	 * @return the query object
+	 */
+	<T> CriteriaDelete<T> createCriteriaDelete(Class<T> targetEntity);
+
+
 	// selection construction methods:
 
 	/**
@@ -1736,5 +1757,75 @@ public interface CriteriaBuilder {
 	 * @return expression
 	 */
 	<T> Expression<T> function(String name, Class<T> type, Expression<?>... args);
+
+	/**
+	 * Downcast Join object to the specified type.
+	 *
+	 * @param join Join object
+	 * @param type type to be downcast to
+	 *
+	 * @return Join object of the specified type
+	 */
+	<X, T, V extends T> Join<X, V> treat(Join<X, T> join, Class<V> type);
+
+	/**
+	 * Downcast CollectionJoin object to the specified type.
+	 *
+	 * @param join CollectionJoin object
+	 * @param type type to be downcast to
+	 *
+	 * @return CollectionJoin object of the specified type
+	 */
+	<X, T, E extends T> CollectionJoin<X, E> treat(CollectionJoin<X, T> join, Class<E> type);
+
+	/**
+	 * Downcast SetJoin object to the specified type.
+	 *
+	 * @param join SetJoin object
+	 * @param type type to be downcast to
+	 *
+	 * @return SetJoin object of the specified type
+	 */
+	<X, T, E extends T> SetJoin<X, E> treat(SetJoin<X, T> join, Class<E> type);
+
+	/**
+	 * Downcast ListJoin object to the specified type.
+	 *
+	 * @param join ListJoin object
+	 * @param type type to be downcast to
+	 *
+	 * @return ListJoin object of the specified type
+	 */
+	<X, T, E extends T> ListJoin<X, E> treat(ListJoin<X, T> join, Class<E> type);
+
+	/**
+	 * Downcast MapJoin object to the specified type.
+	 *
+	 * @param join MapJoin object
+	 * @param type type to be downcast to
+	 *
+	 * @return MapJoin object of the specified type
+	 */
+	<X, K, T, V extends T> MapJoin<X, K, V> treat(MapJoin<X, K, T> join, Class<V> type);
+
+	/**
+	 * Downcast Path object to the specified type.
+	 *
+	 * @param path path
+	 * @param type type to be downcast to
+	 *
+	 * @return Path object of the specified type
+	 */
+	<X, T extends X> Path<X> treat(Path<T> path, Class<X> type);
+
+	/**
+	 * Downcast Root object to the specified type.
+	 *
+	 * @param root root
+	 * @param type type to be downcast to
+	 *
+	 * @return Path object of the specified type
+	 */
+	<X, T extends X> Root<X> treat(Root<T> root, Class<X> type);
 
 }

@@ -33,6 +33,26 @@ public interface ListJoin<Z, E>
 		extends PluralJoin<Z, List<E>, E> {
 
 	/**
+	 * Modify the join to restrict the result according to the
+	 * specified ON condition. Replaces the previous ON condition,
+	 * if any.
+	 * Return the join object
+	 * @param restriction a simple or compound boolean expression
+	 * @return the modified join object
+	 */
+	ListJoin<Z, E> on(Expression<Boolean> restriction);
+
+	/**
+	 * Modify the join to restrict the result according to the
+	 * specified ON condition. Replaces the previous ON condition,
+	 * if any.
+	 * Return the join object
+	 * @param restrictions zero or more restriction predicates
+	 * @return the modified join object
+	 */
+	ListJoin<Z, E> on(Predicate... restrictions);
+
+	/**
 	 * Return the metamodel representation for the list attribute.
 	 *
 	 * @return metamodel type representing the <code>List</code> that is

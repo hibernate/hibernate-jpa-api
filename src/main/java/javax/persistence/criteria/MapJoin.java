@@ -32,6 +32,26 @@ import javax.persistence.metamodel.MapAttribute;
  */
 public interface MapJoin<Z, K, V> extends PluralJoin<Z, Map<K, V>, V> {
 	/**
+	 * Modify the join to restrict the result according to the
+	 * specified ON condition. Replaces the previous ON condition,
+	 * if any.
+	 * Return the join object
+	 * @param restriction a simple or compound boolean expression
+	 * @return the modified join object
+	 */
+	MapJoin<Z, K, V> on(Expression<Boolean> restriction);
+
+	/**
+	 * Modify the join to restrict the result according to the
+	 * specified ON condition. Replaces the previous ON condition,
+	 * if any.
+	 * Return the join object
+	 * @param restrictions zero or more restriction predicates
+	 * @return the modified join object
+	 */
+	MapJoin<Z, K, V> on(Predicate... restrictions);
+
+	/**
 	 * Return the metamodel representation for the map attribute.
 	 *
 	 * @return metamodel type representing the <code>Map</code> that is

@@ -52,4 +52,17 @@ public interface Cache {
      * Clear the cache.
      */
     public void evictAll();
+
+	/**
+	 * Return an object of the specified type to allow access to the provider-specific API.
+	 *
+	 * If the provider's Cache implementation does not support the specified class, the
+	 * PersistenceException is thrown.
+	 * @param cls the class of the object to be returned. This is normally either the
+	 * underlying Cache implementation class or an interface that it implements.
+	 * @return an instance of the specified class
+	 * @throws PersistenceException if the provider does not support the call
+	 */
+	public <T> T unwrap(Class<T> cls);
+
 }

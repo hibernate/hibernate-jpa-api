@@ -26,13 +26,14 @@ import javax.persistence.metamodel.EntityType;
  * The <code>AbstractQuery</code> interface defines functionality that is common
  * to both top-level queries and subqueries.
  * It is not intended to be used directly in query construction.
- *
+ * <p/>
  * <p> All queries must have:
  * a set of root entities (which may in turn own joins).
  * <p> All queries may have:
  * a conjunction of restrictions.
  *
- * @param <T>  the type of the result
+ * @param <T> the type of the result
+ *
  * @since Java Persistence 2.0
  */
 public interface AbstractQuery<T> {
@@ -51,6 +52,7 @@ public interface AbstractQuery<T> {
 	 * forming a cartesian product with any existing roots.
 	 *
 	 * @param entity metamodel entity representing the entity
+	 * <p/>
 	 * of type X
 	 *
 	 * @return query root corresponding to the given entity
@@ -121,7 +123,7 @@ public interface AbstractQuery<T> {
 	 * Specify restrictions over the groups of the query
 	 * according the conjunction of the specified restriction
 	 * predicates.
-	 * Replaces the previously having added restriction(s), if any.
+	 * Replaces the previously added having restriction(s), if any.
 	 * If no restrictions are specified, any previously added
 	 * restrictions are simply removed.
 	 *
@@ -156,8 +158,8 @@ public interface AbstractQuery<T> {
 	<U> Subquery<U> subquery(Class<U> type);
 
 	/**
-	 * Return the query roots.  These are the roots that have
-	 * been defined for the <code>CriteriaQuery</code> or <code>Subquery</code> itself,
+	 * Return the query roots. These are the roots that have
+	 * been defined for the CriteriaQuery or Subquery itself,
 	 * including any subquery roots defined as a result of
 	 * correlation. Returns empty set if no roots have been defined.
 	 * Modifications to the set do not affect the query.
@@ -184,7 +186,7 @@ public interface AbstractQuery<T> {
 	Predicate getRestriction();
 
 	/**
-	 * Return a list of the grouping expressions.  Returns empty
+	 * Return a list of the grouping expressions. Returns empty
 	 * list if no grouping expressions have been specified.
 	 * Modifications to the list do not affect the query.
 	 *
@@ -211,17 +213,17 @@ public interface AbstractQuery<T> {
 	boolean isDistinct();
 
 	/**
-	 * Return the result type of the query or subquery.  If a result
-	 * type was specified as an argument to the
-	 * <code>createQuery</code> or <code>subquery</code> method, that
-	 * type will be returned.  If the query was created using the
-	 * <code>createTupleQuery</code> method, the result type is
-	 * <code>Tuple</code>.  Otherwise, the result type is
-	 * <code>Object</code>.
+	 * Return the result type of the query or subquery.
+	 * If a result type was specified as an argument to the
+	 * createQuery or subquery method, that type will be returned.
+	 * If the query was created using the createTupleQuery
+	 * method, the result type is Tuple.
+	 * Otherwise, the result type is Object.
 	 *
 	 * @return result type
 	 */
 	Class<T> getResultType();
+
 }
 
 
