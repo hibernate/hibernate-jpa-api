@@ -50,9 +50,16 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
 }
 
+// create the sources jar
+task sourcesJar(type: Jar, dependsOn: compileJava) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
 artifacts {
-    // add the javadoc jar to the archives configuration to get it uploaded properly
+    // add the javadoc and sources jars to the archives configuration to get it uploaded properly
     archives javadocJar
+    archives sourcesJar
 }
 
 uploadArchives {
@@ -63,6 +70,18 @@ uploadArchives {
             repository(id: "jboss-releases-repository", url: "https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/")
             snapshotRepository(id: "jboss-snapshots-repository", url: "https://repository.jboss.org/nexus/content/repositories/snapshots")
             pom.project {
+                name 'Java Persistence API, Version 2.1'
+                description 'Clean-room definition of JPA 2.1 APIs intended for transitory use in Hibernate JPA 2.1 implementation.  See README.md for details'
+                url 'http://hibernate.org'
+                issueManagement {
+                    system 'jira'
+                    url 'http://opensource.atlassian.com/projects/hibernate/browse/JPA'
+                }
+                scm {
+                    url "http://github.com/hibernate/hibernate-jpa-api"
+                    connection "scm:git:http://github.com/hibernate/hibernate-jpa-api.git"
+                    developerConnection "scm:git:git@github.com:hibernate/hibernate-jpa-api.git"
+                }
                 licenses {
                     license {
                         name 'Eclipse Public License (EPL), Version 1.0'
@@ -72,6 +91,29 @@ uploadArchives {
                     license {
                         name 'Eclipse Distribution License (EDL), Version 1.0'
                         url 'http://www.eclipse.org/org/documents/edl-v10.php'
+                    }
+                }
+                developers {
+                    developer {
+                        id 'epbernard'
+                        name 'Emmanuel Bernard'
+                        email 'emmanuel@hibernate.org'
+                        organization 'Red Hat, Inc.'
+                        url 'http://in.relation.to/Bloggers/Emmanuel'
+                    }
+                    developer {
+                        id 'hardy.ferentschik'
+                        name 'Hardy Ferentschik'
+                        email 'hferents@redhat.com'
+                        organization 'Red Hat, Inc.'
+                        url 'http://in.relation.to/Bloggers/Hardy'
+                    }
+                    developer {
+                        id 'sebersole'
+                        name 'Steve Ebersole'
+                        email 'steve@hibernate.org'
+                        organization 'Red Hat, Inc.'
+                        url 'http://in.relation.to/Bloggers/Steve'
                     }
                 }
             }
