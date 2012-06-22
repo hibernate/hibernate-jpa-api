@@ -1808,7 +1808,7 @@ public interface CriteriaBuilder {
 	 *
 	 * @return Path object of the specified type
 	 */
-	<X, T extends X> Path<X> treat(Path<T> path, Class<X> type);
+	<X, T extends X> Path<T> treat(Path<X> path, Class<T> type);
 
 	/**
 	 * Downcast Root object to the specified type.
@@ -1818,6 +1818,6 @@ public interface CriteriaBuilder {
 	 *
 	 * @return Path object of the specified type
 	 */
-	<X, T extends X> Root<X> treat(Root<T> root, Class<X> type);
+	<X, T extends X> Root<T> treat(Root<X> root, Class<T> type);
 
 }
