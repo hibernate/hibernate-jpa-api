@@ -198,11 +198,21 @@ public interface Subquery<T> extends AbstractQuery<T>, Expression<T> {
 	<X, K, V> MapJoin<X, K, V> correlate(MapJoin<X, K, V> parentMap);
 
 	/**
-	 * Return the query of which this is a subquery.
+	 * Return the query (which must be a CriteriaQuery or a Subquery) of which this is a subquery.
 	 *
 	 * @return the enclosing query or subquery
 	 */
 	AbstractQuery<?> getParent();
+
+	/**
+	 * Return the query (which may be a CriteriaQuery, CriteriaUpdate, CriteriaDelete, or a Subquery) of which this
+	 * is a subquery.
+	 *
+	 * @return the enclosing query or subquery
+	 *
+	 * @since Java Persistence 2.1
+	 */
+	CommonAbstractCriteria getContainingQuery();
 
 	/**
 	 * Return the selection expression.

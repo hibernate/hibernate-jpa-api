@@ -49,6 +49,13 @@ public @interface PersistenceContext {
      */
     PersistenceContextType type() default PersistenceContextType.TRANSACTION;
 
+	/**
+	 * (Optional) Specifies whether the persistence context is always automatically synchronized with the current
+	 * JTA transaction or whether the persistence context must be explicitly joined to the current JTA transaction by
+	 * means of the EntityManager joinTransaction method
+	 */
+    SynchronizationType synchronizationType() default SynchronizationType.SYNCHRONIZED;
+
     /**
      * (Optional) Properties for the container or persistence
      * provider.  Vendor specific properties may be included in this

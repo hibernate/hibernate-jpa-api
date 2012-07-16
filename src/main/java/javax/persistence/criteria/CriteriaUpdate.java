@@ -30,7 +30,7 @@ import javax.persistence.metamodel.SingularAttribute;
  *
  * @since Java Persistence 2.1
  */
-public interface CriteriaUpdate<T> {
+public interface CriteriaUpdate<T> extends CommonAbstractCriteria {
 	/**
 	 * Create and add a query root corresponding to the entity
 	 * that is the target of the update.
@@ -138,23 +138,4 @@ public interface CriteriaUpdate<T> {
 	 * @return the modified query
 	 */
 	CriteriaUpdate<T> where(Predicate... restrictions);
-
-	/**
-	 * Create a subquery of the query.
-	 *
-	 * @param type the subquery result type
-	 *
-	 * @return subquery
-	 */
-	<U> Subquery<U> subquery(Class<U> type);
-
-	/**
-	 * Return the predicate that corresponds to the where clause
-	 * restriction(s), or null if no restrictions have been
-	 * specified.
-	 *
-	 * @return where clause predicate
-	 */
-	Predicate getRestriction();
-
 }

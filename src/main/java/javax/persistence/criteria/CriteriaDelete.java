@@ -25,7 +25,7 @@ import javax.persistence.metamodel.EntityType;
  *
  * @since Java Persistence 2.1
  */
-public interface CriteriaDelete<T> {
+public interface CriteriaDelete<T> extends CommonAbstractCriteria {
 	/**
 	 * Create and add a query root corresponding to the entity
 	 * that is the target of the delete.
@@ -83,23 +83,4 @@ public interface CriteriaDelete<T> {
 	 * @return the modified query
 	 */
 	CriteriaDelete<T> where(Predicate... restrictions);
-
-	/**
-	 * Create a subquery of the query.
-	 *
-	 * @param type the subquery result type
-	 *
-	 * @return subquery
-	 */
-	<U> Subquery<U> subquery(Class<U> type);
-
-	/**
-	 * Return the predicate that corresponds to the where clause
-	 * restriction(s), or null if no restrictions have been
-	 * specified.
-	 *
-	 * @return where clause predicate
-	 */
-	Predicate getRestriction();
-
 }

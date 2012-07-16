@@ -17,7 +17,7 @@ import java.util.Set;
  * The <code>AbstractQuery</code> interface defines functionality that is common
  * to both top-level queries and subqueries.
  * It is not intended to be used directly in query construction.
- * <p/>
+ *
  * <p> All queries must have:
  * a set of root entities (which may in turn own joins).
  * <p> All queries may have:
@@ -27,7 +27,8 @@ import java.util.Set;
  *
  * @since Java Persistence 2.0
  */
-public interface AbstractQuery<T> {
+public interface AbstractQuery<T> extends CommonAbstractCriteria {
+
 	/**
 	 * Create and add a query root corresponding to the given entity,
 	 * forming a cartesian product with any existing roots.
@@ -42,9 +43,7 @@ public interface AbstractQuery<T> {
 	 * Create and add a query root corresponding to the given entity,
 	 * forming a cartesian product with any existing roots.
 	 *
-	 * @param entity metamodel entity representing the entity
-	 * <p/>
-	 * of type X
+	 * @param entity metamodel entity representing the entity of type X
 	 *
 	 * @return query root corresponding to the given entity
 	 */
@@ -140,17 +139,8 @@ public interface AbstractQuery<T> {
 	AbstractQuery<T> distinct(boolean distinct);
 
 	/**
-	 * Create a subquery of the query.
-	 *
-	 * @param type the subquery result type
-	 *
-	 * @return subquery
-	 */
-	<U> Subquery<U> subquery(Class<U> type);
-
-	/**
-	 * Return the query roots. These are the roots that have
-	 * been defined for the CriteriaQuery or Subquery itself,
+	 * Return the query roots.  These are the roots that have
+	 * been defined for the <code>CriteriaQuery</code> or <code>Subquery</code> itself,
 	 * including any subquery roots defined as a result of
 	 * correlation. Returns empty set if no roots have been defined.
 	 * Modifications to the set do not affect the query.
@@ -168,16 +158,7 @@ public interface AbstractQuery<T> {
 	Selection<T> getSelection();
 
 	/**
-	 * Return the predicate that corresponds to the where clause
-	 * restriction(s), or null if no restrictions have been
-	 * specified.
-	 *
-	 * @return where clause predicate
-	 */
-	Predicate getRestriction();
-
-	/**
-	 * Return a list of the grouping expressions. Returns empty
+	 * Return a list of the grouping expressions.  Returns empty
 	 * list if no grouping expressions have been specified.
 	 * Modifications to the list do not affect the query.
 	 *

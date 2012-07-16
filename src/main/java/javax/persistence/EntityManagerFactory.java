@@ -28,28 +28,45 @@ import java.util.Map;
 public interface EntityManagerFactory {
 
     /**
-     * Create a new application-managed <code>EntityManager</code>.
-     * This method returns a new <code>EntityManager</code> instance each time
-     * it is invoked.
-     * The <code>isOpen</code> method will return true on the returned instance.
+     * Create a new application-managed <code>EntityManager</code>.  This method returns a new
+	 * code>EntityManager</code> instance each time it is invoked.  The <code>isOpen</code> method will return true
+	 * on the returned instance.
+	 *
      * @return entity manager instance
-     * @throws IllegalStateException if the entity manager factory
-     * has been closed
+	 *
+     * @throws IllegalStateException if the entity manager factory has been closed
      */
     public EntityManager createEntityManager();
 
     /**
      * Create a new application-managed <code>EntityManager</code> with the
-     * specified Map of properties.
-     * This method returns a new <code>EntityManager</code> instance each time
-     * it is invoked.
-     * The <code>isOpen</code> method will return true on the returned instance.
+     * specified Map of properties.  This method returns a new <code>EntityManager</code> instance each time
+     * it is invoked.  The <code>isOpen</code> method will return true on the returned instance.
+	 *
      * @param map properties for entity manager
+	 *
      * @return entity manager instance
+	 *
      * @throws IllegalStateException if the entity manager factory
      * has been closed
      */
-    public EntityManager createEntityManager(Map map);
+	public EntityManager createEntityManager(Map map);
+
+	/**
+	 * Create a new JTA application-managed EntityManager with the specified synchronization type and Map of properties.
+	 * This method returns a new EntityManager instance each time it is invoked.  The isOpen method will return true
+	 * on the returned instance.
+	 *
+	 * @param synchronizationType how and when the entity manager
+	 * should be synchronized with the current JTA transaction
+	 * @param map properties for entity manager; may be null
+	 *
+	 * @return entity manager instance
+	 *
+	 * @throws IllegalStateException if the entity manager factory has been configured for resource-local entity
+	 * managers or has been closed
+	 */
+	public EntityManager createEntityManager(SynchronizationType synchronizationType, Map map);
 
     /**
      * Return an instance of <code>CriteriaBuilder</code> for the creation of

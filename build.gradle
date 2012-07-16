@@ -28,7 +28,7 @@ dependencies {
 }
 
 group = 'org.hibernate.javax.persistence'
-version = '1.0.0-SNAPSHOT'
+version = '1.0.0.Draft-7plus'
 
 // gradle uses 'build/' by default
 buildDirName = "target"
