@@ -173,4 +173,12 @@ public @interface MapKeyJoinColumn {
          * </ul>
 	 */
 	String table() default "";
+
+	/**
+	 * (Optional) The foreign key constraint specification for the join column. This is used only if table generation
+	 * is in effect.  Default is provider defined.
+	 *
+	 * @return The foreign key specification
+	 */
+	ForeignKey foreignKey() default @ForeignKey();
 }

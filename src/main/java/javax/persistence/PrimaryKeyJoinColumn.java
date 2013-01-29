@@ -94,4 +94,12 @@ public @interface PrimaryKeyJoinColumn {
 	 * Defaults to the generated SQL to create a column of the inferred type.
 	 */
 	String columnDefinition() default "";
+
+	/**
+	 * (Optional) The foreign key constraint specification for the join column. This is used only if table generation
+	 * is in effect.  Default is provider defined.
+	 *
+	 * @return The foreign key specification
+	 */
+	ForeignKey foreignKey() default @ForeignKey();
 }
