@@ -70,6 +70,32 @@ public class Persistence {
 	}
 
 	/**
+	 * Create database schemas and/or tables and/or create DDL scripts as determined by the supplied properties
+	 *
+	 * Called when schema generation is to occur as a separate phase from creation of the entity manager factory.
+	 *
+	 * @param persistenceUnitName the name of the persistence unit
+	 * @param properties properties for schema generation; these may also contain provider-specific properties. The
+	 * values of these properties override any values that may have been configured elsewhere.
+	 *
+	 * @throws PersistenceException if insufficient or inconsistent configuration information is provided or if schema
+	 * generation otherwise fails.
+	 */
+	public static void generateSchema(String persistenceUnitName, Map properties) {
+		List<PersistenceProvider> providers = getProviders();
+		for ( PersistenceProvider provider : providers ) {
+			final boolean generated = provider.generateSchema( persistenceUnitName, properties );
+			if ( generated ) {
+				return;
+			}
+		}
+
+		throw new PersistenceException(
+				"No persistence provider found for schema generation for persistence-unit named " + persistenceUnitName
+		);
+	}
+
+	/**
 	 * @return Returns a <code>PersistenceUtil</code> instance.
 	 */
 	public static PersistenceUtil getPersistenceUtil() {

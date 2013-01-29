@@ -57,6 +57,40 @@ public interface PersistenceProvider {
 	public EntityManagerFactory createContainerEntityManagerFactory(PersistenceUnitInfo info, Map map);
 
 	/**
+	 * Create database schemas and/or tables and/or create DDL
+	 * scripts as determined by the supplied properties.
+	 *
+	 * Called by the container when schema generation is to
+	 * occur as a separate phase from creation of the entity
+	 * manager factory.
+	 *
+	 * @param info metadata for use by the persistence provider
+	 * @param map properties for schema generation; these may also include provider-specific properties
+	 *
+	 * @throws javax.persistence.PersistenceException if insufficient or inconsistent configuration information is
+	 * provided or if schema generation otherwise fails.
+	 */
+	public void generateSchema(PersistenceUnitInfo info, Map map);
+
+	/**
+	 * Create database schemas and/or tables and/or create DDL
+	 * scripts as determined by the supplied properties.
+	 * Called by the Persistence class when schema generation is to
+	 * occur as a separate phase from creation of the entity
+	 * manager factory.
+	 *
+	 * @param persistenceUnitName the name of the persistence unit
+	 * @param map properties for schema generation; these may also contain provider-specific properties. The value of
+	 * these properties override any values that may have been configured elsewhere.
+	 *
+	 * @return true if schema was generated, otherwise false
+	 *
+	 * @throws javax.persistence.PersistenceException if insufficient or inconsistent configuration information is
+	 * provided or if schema generation otherwise fails.
+	 */
+	public boolean generateSchema(String persistenceUnitName, Map map);
+
+	/**
 	 * Return the utility interface implemented by the persistence
 	 * provider.
 	 *
