@@ -14,6 +14,7 @@ import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.CriteriaUpdate;
 import javax.persistence.metamodel.Metamodel;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -827,4 +828,54 @@ public interface EntityManager {
      * @since Java Persistence 2.0
      */
     public Metamodel getMetamodel();
+
+	/**
+	 * Return a mutable EntityGraph that can be used to dynamically create an EntityGraph.
+	 *
+	 * @param rootType class of entity graph
+	 *
+	 * @return entity graph
+	 *
+	 * @since JPA 2.1
+	 */
+	public <T> EntityGraph<T> createEntityGraph(Class<T> rootType);
+
+	/**
+	 * Return a mutable copy of the named EntityGraph.  If there is no entity graph with the specified name, null
+	 * is returned.
+	 *
+	 * @param graphName name of an entity graph
+	 *
+	 * @return entity graph
+	 *
+	 * @since JPA 2.1
+	 */
+	public EntityGraph<?> createEntityGraph(String graphName);
+
+	/**
+	 * Return a named EntityGraph. The returned EntityGraph should be considered immutable.
+	 *
+	 * @param graphName name of an existing entity graph
+	 *
+	 * @return named entity graph
+	 *
+	 * @throws IllegalArgumentException if there is no EntityGraph of the given name
+	 *
+	 * @since JPA 2.1
+	 */
+	public <T> EntityGraph<T> getEntityGraph(String graphName);
+
+	/**
+	 * Return all named EntityGraphs that have been defined for the provided class type.
+	 *
+	 * @param entityClass entity class
+	 *
+	 * @return list of all entity graphs defined for the entity
+	 *
+	 * @throws IllegalArgumentException if the class is not an entity
+	 *
+	 * @since JPA 2.1
+	 */
+	public <T> List<EntityGraph<? super T>> getEntityGraphs(Class<T> entityClass);
+
 }
