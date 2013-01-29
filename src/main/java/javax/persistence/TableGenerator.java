@@ -137,4 +137,11 @@ public @interface TableGenerator {
 	 * Defaults to no additional constraints.
 	 */
 	UniqueConstraint[] uniqueConstraints() default { };
+
+	/**
+	 * (Optional) Indexes for the table. These are only used if table generation is in effect.
+	 *
+	 * @return The indexes
+	 */
+	Index[] indexes() default {};
 }
