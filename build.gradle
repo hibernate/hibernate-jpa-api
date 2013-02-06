@@ -12,6 +12,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'uploadAuth'
+apply plugin: 'osgi'
 
 repositories {
     // needed to resolve the maven webdav wagon provider
@@ -33,16 +34,27 @@ version = '1.0.0-SNAPSHOT'
 // gradle uses 'build/' by default
 buildDirName = "target"
 
-manifest.mainAttributes(
-        provider: 'gradle',
-        'Built-By': 'Hibernate.org',
-        'Specification-Title': 'Java Persistence API, Version 2.1',
-        'Specification-Version': '2.1',
-        'Specification-Vendor': 'Oracle, Inc.',
-        'Implementation-Version': version,
-        'Implementation-Vendor': 'hibernate.org',
-        'Implementation-Title': 'Java Persistence API'
-)
+jar {
+    manifest = osgiManifest {
+        // GRADLE-1411: Even if we override Imports and Exports
+        // auto-generation with instructions, classesDir and classpath
+        // need to be here (temporarily).
+        classesDir = sourceSets.main.output.classesDir
+        classpath = configurations.runtime
+        
+        // Let OsgiManifest automatically generate all imports and exports.
+        
+        instruction 'Bundle-Vendor', 'Hibernate.org'
+        
+        instruction 'Built-By', 'Hibernate.org'
+        instruction 'Specification-Title', 'Java Persistence API, Version 2.1'
+        instruction 'Specification-Version', '2.1'
+        instruction 'Specification-Vendor', 'Oracle, Inc.'
+        instruction 'Implementation-Version', version
+        instruction 'Implementation-Vendor', 'hibernate.org'
+        instruction 'Implementation-Title', 'Java Persistence API'
+    }
+}
 
 // create the javadoc jar
 task javadocJar(type: Jar, dependsOn: javadoc) {
