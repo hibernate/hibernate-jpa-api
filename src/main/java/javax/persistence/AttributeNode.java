@@ -9,7 +9,7 @@
  */
 package javax.persistence;
 
-import javax.persistence.metamodel.Type;
+import java.util.Map;
 
 /**
  * Represents an attribute node of an entity graph.
@@ -20,16 +20,23 @@ import javax.persistence.metamodel.Type;
  */
 public interface AttributeNode<T> {
 	/**
-	 * Return the Type of the attribute node.
-	 * @return Type object for the attribute node
-	 */
-	public Type<T> getType();
-
-	/**
-	 * Return the name of the attribute corresponding to the
-	 * attribute node.
+	 * Return the name of the attribute corresponding to the attribute node.
+	 *
 	 * @return name of the attribute
 	 */
 	public String getAttributeName();
 
+	/**
+	 * Return the Map<Class, Subgraph> of subgraphs associated with this attribute node.
+	 *
+	 * @return Map of subgraphs associated with this attribute node or empty Map if none have been defined
+	 */
+	public Map<Class, Subgraph> getSubgraphs();
+
+	/**
+	 * Return the Map<Class, Subgraph> of subgraphs associated with this attribute node's map key.
+	 *
+	 * @return Map of subgraphs associated with this attribute node's map key or empty Map if none have been defined
+	 */
+	public Map<Class, Subgraph> getKeySubgraphs();
 }

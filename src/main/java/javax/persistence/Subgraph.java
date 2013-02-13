@@ -13,8 +13,8 @@ import javax.persistence.metamodel.Attribute;
 import java.util.List;
 
 /**
- * This type represents a AttributeNode of an EntityGraph that corresponds to a Managed Type.  Using this class, an
- * entity subgraph can be embedded within an EntityGraph.
+ * This type represents a subgraph for an attribute node that corresponds to a Managed Type.  Using this class,
+ * an entity subgraph can be embedded within an EntityGraph.
  *
  * @param <T> The type of the attribute.
  *
@@ -23,7 +23,9 @@ import java.util.List;
 public interface Subgraph<T> extends AttributeNode<T> {
 	/**
 	 * Add one or more attribute nodes to the entity graph.
+	 *
 	 * @param attributeName name of the attribute
+	 *
 	 * @throws IllegalArgumentException if the attribute is not an attribute of this managed type.
 	 * @throws IllegalStateException if the EntityGraph has been statically defined
 	 */
@@ -31,42 +33,49 @@ public interface Subgraph<T> extends AttributeNode<T> {
 
 	/**
 	 * Add one or more attribute nodes to the entity graph.
+	 *
 	 * @param attribute attribute
+	 *
 	 * @throws IllegalStateException if this EntityGraph has been statically defined
 	 */
 	public void addAttributeNodes(Attribute<T, ?> ... attribute);
 
 	/**
-	 * Add a node to the graph that corresponds to a managed
-	 * type. This allows for construction of multi-node entity graphs
-	 * that include related managed types.
+	 * Add a node to the graph that corresponds to a managed type. This allows for construction of multi-node entity
+	 * graphs that include related managed types.
+	 *
 	 * @param attribute attribute
+	 *
 	 * @return subgraph for the attribute
+	 *
 	 * @throws IllegalArgumentException if the attribute's target type is not a managed type
 	 * @throws IllegalStateException if the EntityGraph has been statically defined
 	 */
 	public <X> Subgraph<X> addSubgraph(Attribute<T, X> attribute);
 
 	/**
-	 * Add a node to the graph that corresponds to a managed
-	 * type with inheritance. This allows for multiple subclass
-	 * subgraphs to be defined for this node of the entity
-	 * graph. Subclass subgraphs will automatically include the
+	 * Add a node to the graph that corresponds to a managed type with inheritance.  This allows for multiple subclass
+	 * subgraphs to be defined for this node of the entity graph.  Subclass subgraphs will automatically include the
 	 * specified attributes of superclass subgraphs
+	 *
 	 * @param attribute attribute
 	 * @param type entity subclass
+	 *
 	 * @return subgraph for the attribute
+	 *
 	 * @throws IllegalArgumentException if the attribute's target type is not a managed type
 	 * @throws IllegalStateException if this EntityGraph has been statically defined
 	 */
 	public <X> Subgraph<? extends X> addSubgraph(Attribute<T, X> attribute, Class<? extends X> type);
 
 	/**
-	 * Add a node to the graph that corresponds to a managed
-	 * type. This allows for construction of multi-node entity graphs
-	 * that include related managed types.
+	 * Add a node to the graph that corresponds to a managed type. This allows for construction of multi-node entity
+	 * graphs that include related managed types.
+	 *
 	 * @param attributeName name of the attribute
+	 *
 	 * @return subgraph for the attribute
+	 *
 	 * @throws IllegalArgumentException if the attribute is not an attribute of this managed type.
 	 * @throws IllegalArgumentException if the attribute's target type is not a managed type
 	 * @throws IllegalStateException if this EntityGraph has been statically defined
@@ -74,14 +83,15 @@ public interface Subgraph<T> extends AttributeNode<T> {
 	public <X> Subgraph<X> addSubgraph(String attributeName);
 
 	/**
-	 * Add a node to the graph that corresponds to a managed
-	 * type with inheritance. This allows for multiple subclass
-	 * subgraphs to be defined for this node of the entity
-	 * graph. Subclass subgraphs will automatically include the
+	 * Add a node to the graph that corresponds to a managed type with inheritance. This allows for multiple subclass
+	 * subgraphs to be defined for this node of the entity graph. Subclass subgraphs will automatically include the
 	 * specified attributes of superclass subgraphs
+	 *
 	 * @param attributeName name of the attribute
 	 * @param type entity subclass
+	 *
 	 * @return subgraph for the attribute
+	 *
 	 * @throws IllegalArgumentException if the attribute is not an attribute of this managed type.
 	 * @throws IllegalArgumentException if the attribute's target type is not a managed type
 	 * @throws IllegalStateException if this EntityGraph has been statically defined
@@ -89,24 +99,26 @@ public interface Subgraph<T> extends AttributeNode<T> {
 	public <X> Subgraph<X> addSubgraph(String attributeName, Class<X> type);
 
 	/**
-	 * Add a node to the graph that corresponds to a map key
-	 * that is a managed type. This allows for construction of
+	 * Add a node to the graph that corresponds to a map key that is a managed type. This allows for construction of
 	 * multinode entity graphs that include related managed types.
+	 *
 	 * @param attribute attribute
+	 *
 	 * @return subgraph for the key attribute
+	 *
 	 * @throws IllegalArgumentException if the attribute's target type is not a managed type entity
 	 * @throws IllegalStateException if this EntityGraph has been statically defined
 	 */
 	public <X> Subgraph<X> addKeySubgraph(Attribute<T, X> attribute);
 
 	/**
-	 * Add a node to the graph that corresponds to a map key
-	 * that is a managed type with inheritance. This allows for
-	 * construction of multi-node entity graphs that include related
-	 * managed types. Subclass subgraphs will automatically include
-	 * the specified attributes of superclass subgraphs
+	 * Add a node to the graph that corresponds to a map key that is a managed type with inheritance. This allows for
+	 * construction of multi-node entity graphs that include related managed types.  Subclass subgraphs will
+	 * automatically include the specified attributes of superclass subgraphs
+	 *
 	 * @param attribute attribute
 	 * @param type entity subclass
+	 *
 	 * @return subgraph for the attribute
 	 * @throws IllegalArgumentException if the attribute's target type is not a managed type entity
 	 * @throws IllegalStateException if this EntityGraph has been statically defined
@@ -114,11 +126,13 @@ public interface Subgraph<T> extends AttributeNode<T> {
 	public <X> Subgraph<? extends X> addKeySubgraph(Attribute<T, X> attribute, Class<? extends X> type);
 
 	/**
-	 * Add a node to the graph that corresponds to a map key
-	 * that is a managed type. This allows for construction of
+	 * Add a node to the graph that corresponds to a map key that is a managed type. This allows for construction of
 	 * multi-node entity graphs that include related managed types.
+	 *
 	 * @param attributeName name of the attribute
+	 *
 	 * @return subgraph for the key attribute
+	 *
 	 * @throws IllegalArgumentException if the attribute is not an attribute of this entity.
 	 * @throws IllegalArgumentException if the attribute's target type is not a managed type
 	 * @throws IllegalStateException if this EntityGraph has been statically defined
@@ -126,14 +140,15 @@ public interface Subgraph<T> extends AttributeNode<T> {
 	public <X> Subgraph<X> addKeySubgraph(String attributeName);
 
 	/**
-	 * Add a node to the graph that corresponds to a map key
-	 * that is a managed type with inheritance. This allows for
-	 * construction of multi-node entity graphs that include related
-	 * managed types. Subclass subgraphs will include the specified
-	 * attributes of superclass subgraphs
+	 * Add a node to the graph that corresponds to a map key that is a managed type with inheritance. This allows for
+	 * construction of multi-node entity graphs that include related managed types. Subclass subgraphs will include
+	 * the specified attributes of superclass subgraphs
+	 *
 	 * @param attributeName name of the attribute
 	 * @param type entity subclass
+	 *
 	 * @return subgraph for the attribute
+	 *
 	 * @throws IllegalArgumentException if the attribute is not an attribute of this entity.
 	 * @throws IllegalArgumentException if the attribute's target type is not a managed type
 	 * @throws IllegalStateException if this EntityGraph has been statically defined
@@ -141,16 +156,17 @@ public interface Subgraph<T> extends AttributeNode<T> {
 	public <X> Subgraph<X> addKeySubgraph(String attributeName, Class<X> type);
 
 	/**
-	 * Return the attribute nodes corresponding to the attributes of
-	 * this managed type that are included in the subgraph.
-	 * @return list of attribute nodes included in the subgraph
+	 * Return the attribute nodes corresponding to the attributes of this managed type that are included in the
+	 * subgraph.
+	 *
+	 * @return list of attribute nodes included in the subgraph or empty list if none have been defined
 	 */
 	public List<AttributeNode<?>> getAttributeNodes();
 
 	/**
 	 * Return the type of for which this subgraph was defined.
+	 *
 	 * @return managed type referenced by the subgraph
 	 */
 	public Class<T> getClassType();
-
 }
