@@ -30,8 +30,6 @@ dependencies {
 
 group = 'org.hibernate.javax.persistence'
 version = '1.0.0-SNAPSHOT'
-// todo : would love to move this out to settings.gradle -> http://forums.gradle.org/gradle/topics/define_extension_properties_from_settings_xml
-ext.jpaVersion = "2.1"
 
 // gradle uses 'build/' by default
 buildDir = "target"
@@ -49,8 +47,8 @@ jar {
         instruction 'Bundle-Vendor', 'Hibernate.org'
         
         instruction 'Built-By', 'Hibernate.org'
-        instruction 'Specification-Title', "Java Persistence API, Version ${project.ext.jpaVersion}"
-        instruction 'Specification-Version', project.ext.jpaVersion
+        instruction 'Specification-Title', "Java Persistence API, Version ${gradle.jpaVersion}"
+        instruction 'Specification-Version', gradle.jpaVersion
         instruction 'Specification-Vendor', 'Oracle, Inc.'
         instruction 'Implementation-Version', version
         instruction 'Implementation-Vendor', 'hibernate.org'
@@ -83,7 +81,7 @@ uploadArchives {
         repository(id: "jboss-releases-repository", url: "https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/")
         snapshotRepository(id: "jboss-snapshots-repository", url: "https://repository.jboss.org/nexus/content/repositories/snapshots")
         pom.project {
-            name "Java Persistence API, Version ${project.ext.jpaVersion}"
+            name "Java Persistence API, Version ${gradle.jpaVersion}"
             description 'Clean-room definition of JPA APIs intended for use in developing Hibernate JPA implementation.  See README.md for details'
             url 'http://hibernate.org'
             issueManagement {
