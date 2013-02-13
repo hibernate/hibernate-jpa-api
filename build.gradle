@@ -30,9 +30,11 @@ dependencies {
 
 group = 'org.hibernate.javax.persistence'
 version = '1.0.0-SNAPSHOT'
+// todo : would love to move this out to settings.gradle -> http://forums.gradle.org/gradle/topics/define_extension_properties_from_settings_xml
+ext.jpaVersion = "2.1"
 
 // gradle uses 'build/' by default
-buildDirName = "target"
+buildDir = "target"
 
 jar {
     manifest = osgiManifest {
@@ -47,8 +49,8 @@ jar {
         instruction 'Bundle-Vendor', 'Hibernate.org'
         
         instruction 'Built-By', 'Hibernate.org'
-        instruction 'Specification-Title', 'Java Persistence API, Version 2.1'
-        instruction 'Specification-Version', '2.1'
+        instruction 'Specification-Title', "Java Persistence API, Version ${project.ext.jpaVersion}"
+        instruction 'Specification-Version', project.ext.jpaVersion
         instruction 'Specification-Vendor', 'Oracle, Inc.'
         instruction 'Implementation-Version', version
         instruction 'Implementation-Vendor', 'hibernate.org'
@@ -75,58 +77,56 @@ artifacts {
 }
 
 uploadArchives {
-    repositories {
-        deployer = mavenDeployer {
-            name = 'jbossDeployer'
-            configuration = configurations.deployerJars
-            repository(id: "jboss-releases-repository", url: "https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/")
-            snapshotRepository(id: "jboss-snapshots-repository", url: "https://repository.jboss.org/nexus/content/repositories/snapshots")
-            pom.project {
-                name 'Java Persistence API, Version 2.1'
-                description 'Clean-room definition of JPA 2.1 APIs intended for transitory use in Hibernate JPA 2.1 implementation.  See README.md for details'
-                url 'http://hibernate.org'
-                issueManagement {
-                    system 'jira'
-                    url 'http://opensource.atlassian.com/projects/hibernate/browse/JPA'
+    repositories.mavenDeployer {
+        name = 'jbossDeployer'
+        configuration = configurations.deployerJars
+        repository(id: "jboss-releases-repository", url: "https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/")
+        snapshotRepository(id: "jboss-snapshots-repository", url: "https://repository.jboss.org/nexus/content/repositories/snapshots")
+        pom.project {
+            name "Java Persistence API, Version ${project.ext.jpaVersion}"
+            description 'Clean-room definition of JPA APIs intended for use in developing Hibernate JPA implementation.  See README.md for details'
+            url 'http://hibernate.org'
+            issueManagement {
+                system 'jira'
+                url 'http://opensource.atlassian.com/projects/hibernate/browse/JPA'
+            }
+            scm {
+                url "http://github.com/hibernate/hibernate-jpa-api"
+                connection "scm:git:http://github.com/hibernate/hibernate-jpa-api.git"
+                developerConnection "scm:git:git@github.com:hibernate/hibernate-jpa-api.git"
+            }
+            licenses {
+                license {
+                    name 'Eclipse Public License (EPL), Version 1.0'
+                    url 'http://www.eclipse.org/legal/epl-v10.html'
+                    distribution 'repo'
                 }
-                scm {
-                    url "http://github.com/hibernate/hibernate-jpa-api"
-                    connection "scm:git:http://github.com/hibernate/hibernate-jpa-api.git"
-                    developerConnection "scm:git:git@github.com:hibernate/hibernate-jpa-api.git"
+                license {
+                    name 'Eclipse Distribution License (EDL), Version 1.0'
+                    url 'http://www.eclipse.org/org/documents/edl-v10.php'
                 }
-                licenses {
-                    license {
-                        name 'Eclipse Public License (EPL), Version 1.0'
-                        url 'http://www.eclipse.org/legal/epl-v10.html'
-                        distribution 'repo'
-                    }
-                    license {
-                        name 'Eclipse Distribution License (EDL), Version 1.0'
-                        url 'http://www.eclipse.org/org/documents/edl-v10.php'
-                    }
+            }
+            developers {
+                developer {
+                    id 'epbernard'
+                    name 'Emmanuel Bernard'
+                    email 'emmanuel@hibernate.org'
+                    organization 'Red Hat, Inc.'
+                    url 'http://in.relation.to/Bloggers/Emmanuel'
                 }
-                developers {
-                    developer {
-                        id 'epbernard'
-                        name 'Emmanuel Bernard'
-                        email 'emmanuel@hibernate.org'
-                        organization 'Red Hat, Inc.'
-                        url 'http://in.relation.to/Bloggers/Emmanuel'
-                    }
-                    developer {
-                        id 'hardy.ferentschik'
-                        name 'Hardy Ferentschik'
-                        email 'hferents@redhat.com'
-                        organization 'Red Hat, Inc.'
-                        url 'http://in.relation.to/Bloggers/Hardy'
-                    }
-                    developer {
-                        id 'sebersole'
-                        name 'Steve Ebersole'
-                        email 'steve@hibernate.org'
-                        organization 'Red Hat, Inc.'
-                        url 'http://in.relation.to/Bloggers/Steve'
-                    }
+                developer {
+                    id 'hardy.ferentschik'
+                    name 'Hardy Ferentschik'
+                    email 'hferents@redhat.com'
+                    organization 'Red Hat, Inc.'
+                    url 'http://in.relation.to/Bloggers/Hardy'
+                }
+                developer {
+                    id 'sebersole'
+                    name 'Steve Ebersole'
+                    email 'steve@hibernate.org'
+                    organization 'Red Hat, Inc.'
+                    url 'http://in.relation.to/Bloggers/Steve'
                 }
             }
         }
