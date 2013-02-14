@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @since JPA 2.1
  */
-public interface Subgraph<T> extends AttributeNode<T> {
+public interface Subgraph<T> {
 	/**
 	 * Add one or more attribute nodes to the entity graph.
 	 *
