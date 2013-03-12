@@ -29,7 +29,7 @@ dependencies {
 }
 
 group = 'org.hibernate.javax.persistence'
-version = '1.0.0-SNAPSHOT'
+version = '1.0.0.Draft-14'
 
 // gradle uses 'build/' by default
 buildDir = "target"
@@ -48,7 +48,7 @@ jar {
         
         instruction 'Built-By', 'Hibernate.org'
         instruction 'Specification-Title', "Java Persistence API, Version ${gradle.jpaVersion}"
-        instruction 'Specification-Version', gradle.jpaVersion
+        instruction 'Specification-Version', "${gradle.jpaVersion} (Proposed Final Draft)"
         instruction 'Specification-Vendor', 'Oracle, Inc.'
         instruction 'Implementation-Version', version
         instruction 'Implementation-Vendor', 'hibernate.org'
