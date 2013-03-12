@@ -23,7 +23,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  *
  * @since Java Persistence 1.0
  */
-
 @Target({TYPE, METHOD, FIELD})
 @Retention(RUNTIME)
 public @interface PersistenceContext {
@@ -53,8 +52,10 @@ public @interface PersistenceContext {
 	 * (Optional) Specifies whether the persistence context is always automatically synchronized with the current
 	 * JTA transaction or whether the persistence context must be explicitly joined to the current JTA transaction by
 	 * means of the EntityManager joinTransaction method
+	 *
+	 * @since Java Persistence 2.1
 	 */
-    SynchronizationType synchronizationType() default SynchronizationType.SYNCHRONIZED;
+	SynchronizationType synchronization() default SynchronizationType.SYNCHRONIZED;
 
     /**
      * (Optional) Properties for the container or persistence

@@ -53,6 +53,21 @@ public interface EntityManagerFactory {
 	public EntityManager createEntityManager(Map map);
 
 	/**
+	 * Create a new JTA application-managed EntityManager with the specified synchronization type.  This method
+	 * returns a new EntityManager instance each time it is invoked.  The isOpen method will return true on the
+	 * returned instance.
+	 *
+	 * @param synchronizationType how and when the entity manager should be synchronized with the current JTA
+	 * transaction
+	 *
+	 * @return entity manager instance
+	 *
+	 * @throws IllegalStateException if the entity manager factory has been configured for resource-local entity
+	 * managers or has been closed
+	 */
+	public EntityManager createEntityManager(SynchronizationType synchronizationType);
+
+	/**
 	 * Create a new JTA application-managed EntityManager with the specified synchronization type and Map of properties.
 	 * This method returns a new EntityManager instance each time it is invoked.  The isOpen method will return true
 	 * on the returned instance.
