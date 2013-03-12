@@ -58,6 +58,11 @@ public @interface SqlResultSetMapping {
 	EntityResult[] entities() default { };
 
 	/**
+	 * Specifies the result set mapping constructor references
+	 */
+	ConstructorResult[] classes() default {};
+
+	/**
 	 * Specifies the result set mapping to scalar values.
 	 */
 	ColumnResult[] columns() default { };
