@@ -39,9 +39,7 @@ public @interface ForeignKey {
 	String foreignKeyDefinition() default "";
 
 	/**
-	 * (Optional) Whether the provider should not generate a foreign key constraint.  Defaults to false
-	 *
-	 * @return Should the provider generate a foreign key?
+	 * (Optional) Used to specify whether a foreign key constraint should be generated when schema generation is in effect.
 	 */
-	boolean disableForeignKey() default false;
+	ConstraintMode value() default ConstraintMode.CONSTRAINT;
 }

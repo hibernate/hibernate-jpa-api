@@ -145,4 +145,15 @@ public @interface CollectionTable {
 	 * @return The indexes
 	 */
 	Index[] indexes() default {};
+
+	/**
+	 * (Optional) Used to specify or control the generation of a foreign key constraint for the columns
+	 * corresponding to the joinColumns element when table generation is in effect. If both this element
+	 * and the foreignKey element of any of the joinColumns elements are specified, the behavior is undefined.
+	 * If no foreign key annotation element is specified in either location, the persistence provider's default
+	 * foreign key strategy will apply.
+	 *
+	 * @since Java Persistence 2.1
+	 */
+	ForeignKey foreignKey() default @ForeignKey(ConstraintMode.PROVIDER_DEFAULT);
 }

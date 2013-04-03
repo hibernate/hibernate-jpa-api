@@ -95,4 +95,12 @@ public @interface SecondaryTable {
 	 * @return The indexes
 	 */
 	Index[] indexes() default {};
+
+	/**
+	 * (Optional) Used to specify or control the generation of a foreign key constraint for the columns
+	 * corresponding to the pkJoinColumns element when table generation is in effect.
+	 *
+	 * @since Java Persistence 2.1
+	 */
+	ForeignKey foreignKey() default @ForeignKey(ConstraintMode.PROVIDER_DEFAULT);
 }

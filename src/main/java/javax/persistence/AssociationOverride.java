@@ -150,4 +150,12 @@ public @interface AssociationOverride {
      * @since Java Persistence 2.0
      */
     JoinTable joinTable() default @JoinTable;
+
+	/**
+	 * (Optional) Used to specify or control the generation of a foreign key constraint for the columns
+	 * corresponding to the joinColumns element when table generation is in effect.
+	 *
+	 * @since Java Persistence 2.1
+	 */
+	ForeignKey foreignKey() default @ForeignKey(ConstraintMode.PROVIDER_DEFAULT);
 }
