@@ -45,7 +45,15 @@ jar {
         classesDir = sourceSets.main.output.classesDir
         classpath = configurations.runtime
         
-        // Let OsgiManifest automatically generate all imports and exports.
+        // Let OsgiManifest automatically generate all imports.
+        
+        // Explicitly list exports to control the version.
+        instruction "Export-Package",
+            "javax.persistence;version='${gradle.jpaVersion}.0'",
+            "javax.persistence.criteria;version='${gradle.jpaVersion}.0'",
+            "javax.persistence.metamodel;version='${gradle.jpaVersion}.0'",
+            "javax.persistence.spi;version='${gradle.jpaVersion}.0'",
+            "*"
         
         instruction 'Bundle-Vendor', 'Hibernate.org'
         
