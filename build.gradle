@@ -1,7 +1,3 @@
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.5'
-}
-
 buildscript {
     repositories {
         mavenCentral()
@@ -9,28 +5,20 @@ buildscript {
         mavenRepo name: 'jboss-nexus', url: "https://repository.jboss.org/nexus/content/groups/public/"
     }
     dependencies {
-        classpath 'org.hibernate.build.gradle:gradle-upload-auth-plugin:1.1.1'
+        classpath 'org.hibernate.build.gradle:gradle-maven-publish-auth:2.0.1'
     }
 }
 
 apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'uploadAuth'
+apply plugin: 'maven-publish'
+apply plugin: 'maven-publish-auth'
 apply plugin: 'osgi'
+
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+
 repositories {
-    // needed to resolve the maven webdav wagon provider
     mavenCentral()
-}
-
-configurations {
-    // classpath config used for maven deployers (wagon providers)
-    deployerJars
-}
-
-dependencies {
-    deployerJars 'org.apache.maven.wagon:wagon-webdav:1.0-beta-2'
 }
 
 group = 'org.hibernate.javax.persistence'
@@ -39,9 +27,10 @@ version = '1.0.0-SNAPSHOT'
 targetCompatibility=1.6
 sourceCompatibility=1.6
 
-// gradle uses 'build/' by default
+// gradle uses 'build/' by default, we like 'target/'
 buildDir = "target"
 
+// osgi info
 jar {
     manifest = osgiManifest {
         // GRADLE-1411: Even if we override Imports and Exports
@@ -72,6 +61,90 @@ jar {
     }
 }
 
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+
+            artifact sourcesJar {
+                classifier "sources"
+            }
+
+            artifact javadocJar {
+                classifier "javadoc"
+            }
+
+            pom.withXml {
+                // append additional metadata
+                asNode().children().last() + {
+                    resolveStrategy = Closure.DELEGATE_FIRST
+
+                    name "Java Persistence API, Version ${gradle.jpaVersion}"
+                    description 'Clean-room definition of JPA APIs intended for use in developing Hibernate JPA implementation.  See README.md for details'
+                    url 'http://hibernate.org'
+                    issueManagement {
+                        system 'jira'
+                        url 'http://opensource.atlassian.com/projects/hibernate/browse/JPA'
+                    }
+                    scm {
+                        url "http://github.com/hibernate/hibernate-jpa-api"
+                        connection "scm:git:http://github.com/hibernate/hibernate-jpa-api.git"
+                        developerConnection "scm:git:git@github.com:hibernate/hibernate-jpa-api.git"
+                    }
+                    licenses {
+                        license {
+                            name 'Eclipse Public License (EPL), Version 1.0'
+                            url 'http://www.eclipse.org/legal/epl-v10.html'
+                            distribution 'repo'
+                        }
+                        license {
+                            name 'Eclipse Distribution License (EDL), Version 1.0'
+                            url 'http://www.eclipse.org/org/documents/edl-v10.php'
+                        }
+                    }
+                    developers {
+                        developer {
+                            id 'epbernard'
+                            name 'Emmanuel Bernard'
+                            email 'emmanuel@hibernate.org'
+                            organization 'Red Hat, Inc.'
+                            url 'http://in.relation.to/Bloggers/Emmanuel'
+                        }
+                        developer {
+                            id 'hardy.ferentschik'
+                            name 'Hardy Ferentschik'
+                            email 'hferents@redhat.com'
+                            organization 'Red Hat, Inc.'
+                            url 'http://in.relation.to/Bloggers/Hardy'
+                        }
+                        developer {
+                            id 'sebersole'
+                            name 'Steve Ebersole'
+                            email 'steve@hibernate.org'
+                            organization 'Red Hat, Inc.'
+                            url 'http://in.relation.to/Bloggers/Steve'
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            if ( project.version.endsWith( 'SNAPSHOT' ) ) {
+                name 'jboss-snapshots-repository'
+                url 'https://repository.jboss.org/nexus/content/repositories/snapshots'
+            }
+            else {
+                name 'jboss-releases-repository'
+                url 'https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/'
+            }
+        }
+    }
+}
+
 // create the javadoc jar
 task javadocJar(type: Jar, dependsOn: javadoc) {
     from javadoc.destinationDir
@@ -84,65 +157,6 @@ task sourcesJar(type: Jar, dependsOn: compileJava) {
     classifier = 'sources'
 }
 
-artifacts {
-    // add the javadoc and sources jars to the archives configuration to get it uploaded properly
-    archives javadocJar
-    archives sourcesJar
-}
-
-uploadArchives {
-    repositories.mavenDeployer {
-        name = 'jbossDeployer'
-        configuration = configurations.deployerJars
-        repository(id: "jboss-releases-repository", url: "https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/")
-        snapshotRepository(id: "jboss-snapshots-repository", url: "https://repository.jboss.org/nexus/content/repositories/snapshots")
-        pom.project {
-            name "Java Persistence API, Version ${gradle.jpaVersion}"
-            description 'Clean-room definition of JPA APIs intended for use in developing Hibernate JPA implementation.  See README.md for details'
-            url 'http://hibernate.org'
-            issueManagement {
-                system 'jira'
-                url 'http://opensource.atlassian.com/projects/hibernate/browse/JPA'
-            }
-            scm {
-                url "http://github.com/hibernate/hibernate-jpa-api"
-                connection "scm:git:http://github.com/hibernate/hibernate-jpa-api.git"
-                developerConnection "scm:git:git@github.com:hibernate/hibernate-jpa-api.git"
-            }
-            licenses {
-                license {
-                    name 'Eclipse Public License (EPL), Version 1.0'
-                    url 'http://www.eclipse.org/legal/epl-v10.html'
-                    distribution 'repo'
-                }
-                license {
-                    name 'Eclipse Distribution License (EDL), Version 1.0'
-                    url 'http://www.eclipse.org/org/documents/edl-v10.php'
-                }
-            }
-            developers {
-                developer {
-                    id 'epbernard'
-                    name 'Emmanuel Bernard'
-                    email 'emmanuel@hibernate.org'
-                    organization 'Red Hat, Inc.'
-                    url 'http://in.relation.to/Bloggers/Emmanuel'
-                }
-                developer {
-                    id 'hardy.ferentschik'
-                    name 'Hardy Ferentschik'
-                    email 'hferents@redhat.com'
-                    organization 'Red Hat, Inc.'
-                    url 'http://in.relation.to/Bloggers/Hardy'
-                }
-                developer {
-                    id 'sebersole'
-                    name 'Steve Ebersole'
-                    email 'steve@hibernate.org'
-                    organization 'Red Hat, Inc.'
-                    url 'http://in.relation.to/Bloggers/Steve'
-                }
-            }
-        }
-    }
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.6'
 }
