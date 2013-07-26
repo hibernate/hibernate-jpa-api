@@ -22,7 +22,7 @@ repositories {
 }
 
 group = 'org.hibernate.javax.persistence'
-version = '1.0.0.Final'
+version = '1.0.1-SNAPSHOT'
 
 targetCompatibility=1.6
 sourceCompatibility=1.6
