@@ -13,7 +13,8 @@ apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'uploadAuth'
 apply plugin: 'osgi'
-
+apply plugin: 'eclipse'
+apply plugin: 'idea'
 repositories {
     // needed to resolve the maven webdav wagon provider
     mavenCentral()
