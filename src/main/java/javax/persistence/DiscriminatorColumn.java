@@ -51,28 +51,28 @@ import static javax.persistence.DiscriminatorType.STRING;
 @Retention(RUNTIME)
 public @interface DiscriminatorColumn {
 
-    /**
-     * (Optional) The name of column to be used for the discriminator.
-     */
-    String name() default "DTYPE";
+	/**
+	 * (Optional) The name of column to be used for the discriminator.
+	 */
+	String name() default "DTYPE";
 
-    /**
-     * (Optional) The type of object/column to use as a class discriminator.
-     * Defaults to {@link DiscriminatorType#STRING DiscriminatorType.STRING}.
-     */
-    DiscriminatorType discriminatorType() default STRING;
+	/**
+	 * (Optional) The type of object/column to use as a class discriminator.
+	 * Defaults to {@link DiscriminatorType#STRING DiscriminatorType.STRING}.
+	 */
+	DiscriminatorType discriminatorType() default STRING;
 
-    /**
-     * (Optional) The SQL fragment that is used when generating the DDL
-     * for the discriminator column.
-     * <p> Defaults to the provider-generated SQL to create a column
-     * of the specified discriminator type.
-     */
-    String columnDefinition() default "";
+	/**
+	 * (Optional) The SQL fragment that is used when generating the DDL
+	 * for the discriminator column.
+	 * <p> Defaults to the provider-generated SQL to create a column
+	 * of the specified discriminator type.
+	 */
+	String columnDefinition() default "";
 
-    /**
-     * (Optional) The column length for String-based discriminator types.
-     * Ignored for other discriminator types.
-     */
-    int length() default 31;
+	/**
+	 * (Optional) The column length for String-based discriminator types.
+	 * Ignored for other discriminator types.
+	 */
+	int length() default 31;
 }

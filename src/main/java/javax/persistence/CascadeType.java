@@ -19,26 +19,26 @@ package javax.persistence;
  */
 public enum CascadeType {
 
-    /** Cascade all operations */
-    ALL,
+	/** Cascade all operations */
+	ALL,
 
-    /** Cascade persist operation */
-    PERSIST,
+	/** Cascade persist operation */
+	PERSIST,
 
-    /** Cascade merge operation */
-    MERGE,
+	/** Cascade merge operation */
+	MERGE,
 
-    /** Cascade remove operation */
-    REMOVE,
+	/** Cascade remove operation */
+	REMOVE,
 
-    /** Cascade refresh operation */
-    REFRESH,
+	/** Cascade refresh operation */
+	REFRESH,
 
-    /**
-     * Cascade detach operation
-     *
-     * @since Java Persistence 2.0
-     *
-     */
-    DETACH
+	/**
+	 * Cascade detach operation
+	 *
+	 * @since Java Persistence 2.0
+	 *
+	 */
+	DETACH
 }

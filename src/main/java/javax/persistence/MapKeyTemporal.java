@@ -40,9 +40,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface MapKeyTemporal {
 
-    /** (Required) The type used in mapping
-     * <code>java.util.Date</code> or
-     * <code>java.util.Calendar</code>.
-     */
-    TemporalType value();
+	/** (Required) The type used in mapping
+	 * <code>java.util.Date</code> or
+	 * <code>java.util.Calendar</code>.
+	 */
+	TemporalType value();
 }

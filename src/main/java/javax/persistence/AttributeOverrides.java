@@ -45,6 +45,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 public @interface AttributeOverrides {
 
-    /** (Required) One or more field or property mapping overrides. */
-    AttributeOverride[] value();
+	/** (Required) One or more field or property mapping overrides. */
+	AttributeOverride[] value();
 }

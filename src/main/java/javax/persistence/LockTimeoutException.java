@@ -19,71 +19,71 @@ package javax.persistence;
  * @since Java Persistence 2.0
  */
 public class LockTimeoutException extends PersistenceException {
-    /** The object that caused the exception */
-    Object entity;
+	/** The object that caused the exception */
+	Object entity;
 
-    /**
-     * Constructs a new <code>LockTimeoutException</code> exception
-     * with <code>null</code> as its detail message.
-     */
-    public LockTimeoutException() {
-        super();
-    }
+	/**
+	 * Constructs a new <code>LockTimeoutException</code> exception
+	 * with <code>null</code> as its detail message.
+	 */
+	public LockTimeoutException() {
+		super();
+	}
 
-    /**
-     * Constructs a new <code>LockTimeoutException</code> exception
-     * with the specified detail message.
-     * @param   message   the detail message.
-     */
-    public LockTimeoutException(String message) {
-        super(message);
-    }
+	/**
+	 * Constructs a new <code>LockTimeoutException</code> exception
+	 * with the specified detail message.
+	 * @param   message   the detail message.
+	 */
+	public LockTimeoutException(String message) {
+		super(message);
+	}
 
-    /**
-     * Constructs a new <code>LockTimeoutException</code> exception
-     * with the specified detail message and cause.
-     * @param   message   the detail message.
-     * @param   cause     the cause.
-     */
-    public LockTimeoutException(String message, Throwable cause) {
-        super(message, cause);
-    }
+	/**
+	 * Constructs a new <code>LockTimeoutException</code> exception
+	 * with the specified detail message and cause.
+	 * @param   message   the detail message.
+	 * @param   cause     the cause.
+	 */
+	public LockTimeoutException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-    /**
-     * Constructs a new <code>LockTimeoutException</code> exception
-     * with the specified cause.
-     * @param   cause     the cause.
-     */
-    public LockTimeoutException(Throwable cause) {
-        super(cause);
-    }
+	/**
+	 * Constructs a new <code>LockTimeoutException</code> exception
+	 * with the specified cause.
+	 * @param   cause     the cause.
+	 */
+	public LockTimeoutException(Throwable cause) {
+		super(cause);
+	}
 
-    /**
-     * Constructs a new <code>LockTimeoutException</code> exception
-     * with the specified object.
-     * @param   entity     the entity.
-     */
-    public LockTimeoutException(Object entity) {
-        this.entity = entity;
-    }
+	/**
+	 * Constructs a new <code>LockTimeoutException</code> exception
+	 * with the specified object.
+	 * @param   entity     the entity.
+	 */
+	public LockTimeoutException(Object entity) {
+		this.entity = entity;
+	}
 
-    /**
-     * Constructs a new <code>LockTimeoutException</code> exception
-     * with the specified detail message, cause, and entity.
-     * @param   message   the detail message.
-     * @param   cause     the cause.
-     * @param   entity     the entity.
-     */
-    public LockTimeoutException(String message, Throwable cause, Object entity) {
-        super(message, cause);
-        this.entity = entity;
-    }
+	/**
+	 * Constructs a new <code>LockTimeoutException</code> exception
+	 * with the specified detail message, cause, and entity.
+	 * @param   message   the detail message.
+	 * @param   cause     the cause.
+	 * @param   entity     the entity.
+	 */
+	public LockTimeoutException(String message, Throwable cause, Object entity) {
+		super(message, cause);
+		this.entity = entity;
+	}
 
-    /**
-     * Returns the object that caused this exception.
-     * @return the entity
-     */
-    public Object getObject() {
-        return this.entity;
-    }
+	/**
+	 * Returns the object that caused this exception.
+	 * @return the entity
+	 */
+	public Object getObject() {
+		return this.entity;
+	}
 }

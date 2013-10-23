@@ -122,34 +122,34 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 public @interface AssociationOverride {
 
-    /**
-     * (Required) The name of the relationship property whose mapping is
-     * being overridden if property-based access is being used,
-     * or the name of the relationship field if field-based access is used.
-     */
-    String name();
+	/**
+	 * (Required) The name of the relationship property whose mapping is
+	 * being overridden if property-based access is being used,
+	 * or the name of the relationship field if field-based access is used.
+	 */
+	String name();
 
-    /**
-     * The join column(s) being mapped to the persistent attribute(s).
-     * The <code>joinColumns</code> elements must be specified if a
-     * foreign key mapping is used in the overriding of the mapping of
-     * the relationship.  The <code>joinColumns</code> element must
-     * not be specified if a join table is used in the overriding of
-     * the mapping of the relationship.
-     */
-    JoinColumn[] joinColumns() default {};
+	/**
+	 * The join column(s) being mapped to the persistent attribute(s).
+	 * The <code>joinColumns</code> elements must be specified if a
+	 * foreign key mapping is used in the overriding of the mapping of
+	 * the relationship.  The <code>joinColumns</code> element must
+	 * not be specified if a join table is used in the overriding of
+	 * the mapping of the relationship.
+	 */
+	JoinColumn[] joinColumns() default {};
 
-    /**
-     * The join table that maps the relationship.
-     * The <code>joinTable</code> element must be specified if a join table
-     * is used in the overriding of the mapping of the
-     * relationship.  The <code>joinTable</code> element must not be specified
-     * if a foreign key mapping is used in the overriding of
-     * the relationship.
-     *
-     * @since Java Persistence 2.0
-     */
-    JoinTable joinTable() default @JoinTable;
+	/**
+	 * The join table that maps the relationship.
+	 * The <code>joinTable</code> element must be specified if a join table
+	 * is used in the overriding of the mapping of the
+	 * relationship.  The <code>joinTable</code> element must not be specified
+	 * if a foreign key mapping is used in the overriding of
+	 * the relationship.
+	 *
+	 * @since Java Persistence 2.0
+	 */
+	JoinTable joinTable() default @JoinTable;
 
 	/**
 	 * (Optional) Used to specify or control the generation of a foreign key constraint for the columns

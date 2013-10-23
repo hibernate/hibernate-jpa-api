@@ -114,18 +114,18 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface OrderBy {
 
    /**
-    * An <code>orderby_list</code>.  Specified as follows:
-    *
-    * <pre>
-    *    orderby_list::= orderby_item [,orderby_item]*
-    *    orderby_item::= [property_or_field_name] [ASC | DESC]
-    * </pre>
-    *
-    * <p> If <code>ASC</code> or <code>DESC</code> is not specified,
-    * <code>ASC</code> (ascending order) is assumed.
-    *
-    * <p> If the ordering element is not specified, ordering by
-    * the primary key of the associated entity is assumed.
-    */
-    String value() default "";
+	* An <code>orderby_list</code>.  Specified as follows:
+	*
+	* <pre>
+	*    orderby_list::= orderby_item [,orderby_item]*
+	*    orderby_item::= [property_or_field_name] [ASC | DESC]
+	* </pre>
+	*
+	* <p> If <code>ASC</code> or <code>DESC</code> is not specified,
+	* <code>ASC</code> (ascending order) is assumed.
+	*
+	* <p> If the ordering element is not specified, ordering by
+	* the primary key of the associated entity is assumed.
+	*/
+	String value() default "";
 }

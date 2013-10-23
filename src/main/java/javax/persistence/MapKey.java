@@ -80,15 +80,15 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface MapKey {
 
-    /**
-     * (Optional) The name of the persistent field or property of the
-     * associated entity that is used as the map key.
-     * <p> Default: If the
-     * <code>name</code> element is not specified, the primary key of the
-     * associated entity is used as the map key. If the
-     * primary key is a composite primary key and is mapped
-     * as <code>IdClass</code>, an instance of the primary key
-     * class is used as the key.
-     */
-    String name() default "";
+	/**
+	 * (Optional) The name of the persistent field or property of the
+	 * associated entity that is used as the map key.
+	 * <p> Default: If the
+	 * <code>name</code> element is not specified, the primary key of the
+	 * associated entity is used as the map key. If the
+	 * primary key is a composite primary key and is mapped
+	 * as <code>IdClass</code>, an instance of the primary key
+	 * class is used as the key.
+	 */
+	String name() default "";
 }

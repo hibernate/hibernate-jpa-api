@@ -16,18 +16,18 @@ package javax.persistence;
  */
 public enum DiscriminatorType {
 
-    /**
-     * String as the discriminator type.
-     */
-    STRING,
+	/**
+	 * String as the discriminator type.
+	 */
+	STRING,
 
-    /**
-     * Single character as the discriminator type.
-     */
-    CHAR,
+	/**
+	 * Single character as the discriminator type.
+	 */
+	CHAR,
 
-    /**
-     * Integer as the discriminator type.
-     */
-    INTEGER
+	/**
+	 * Integer as the discriminator type.
+	 */
+	INTEGER
 }

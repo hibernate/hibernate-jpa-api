@@ -32,9 +32,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface Cacheable {
 
-    /**
-     * (Optional) Whether or not the entity should be cached.
-     */
-    boolean value() default true;
+	/**
+	 * (Optional) Whether or not the entity should be cached.
+	 */
+	boolean value() default true;
 }
 

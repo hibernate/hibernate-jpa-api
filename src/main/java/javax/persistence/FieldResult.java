@@ -45,12 +45,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 public @interface FieldResult {
 
-    /** Name of the persistent field or property of the class. */
-    String name();
+	/** Name of the persistent field or property of the class. */
+	String name();
 
-    /**
-     * Name of the column in the SELECT clause - i.e., column
-     * aliases, if applicable.
-     */
-    String column();
+	/**
+	 * Name of the column in the SELECT clause - i.e., column
+	 * aliases, if applicable.
+	 */
+	String column();
 }

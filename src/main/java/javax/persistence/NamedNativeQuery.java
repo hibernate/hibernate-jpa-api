@@ -27,21 +27,21 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface NamedNativeQuery {
 
-    /**
-     * The name used to refer to the query with the {@link EntityManager}
-     * methods that create query objects.
-     */
-    String name();
+	/**
+	 * The name used to refer to the query with the {@link EntityManager}
+	 * methods that create query objects.
+	 */
+	String name();
 
-    /** The SQL query string. */
-    String query();
+	/** The SQL query string. */
+	String query();
 
-    /** Query properties and hints.  (May include vendor-specific query hints.) */
-    QueryHint[] hints() default {};
+	/** Query properties and hints.  (May include vendor-specific query hints.) */
+	QueryHint[] hints() default {};
 
-    /** The class of the result. */
-    Class resultClass() default void.class;
+	/** The class of the result. */
+	Class resultClass() default void.class;
 
-    /** The name of a {@link SqlResultSetMapping}, as defined in metadata. */
-    String resultSetMapping() default "";
+	/** The name of a {@link SqlResultSetMapping}, as defined in metadata. */
+	String resultSetMapping() default "";
 }

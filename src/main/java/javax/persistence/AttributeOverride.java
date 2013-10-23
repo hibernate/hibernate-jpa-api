@@ -132,17 +132,17 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 public @interface AttributeOverride {
 
-    /**
-     * (Required) The name of the property whose mapping is being
-     * overridden if property-based access is being used, or the
-     * name of the field if field-based access is used.
-     */
-    String name();
+	/**
+	 * (Required) The name of the property whose mapping is being
+	 * overridden if property-based access is being used, or the
+	 * name of the field if field-based access is used.
+	 */
+	String name();
 
-    /**
-     * (Required) The column that is being mapped to the persistent
-     * attribute. The mapping type will remain the same as is
-     * defined in the embeddable class or mapped superclass.
-     */
-    Column column();
+	/**
+	 * (Required) The column that is being mapped to the persistent
+	 * attribute. The mapping type will remain the same as is
+	 * defined in the embeddable class or mapped superclass.
+	 */
+	Column column();
 }

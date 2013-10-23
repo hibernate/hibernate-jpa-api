@@ -51,8 +51,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface ColumnResult {
 
-    /** (Required) The name of a column in the SELECT clause of a SQL query */
-    String name();
+	/** (Required) The name of a column in the SELECT clause of a SQL query */
+	String name();
 
 	/** (Optional) The Java type to which the column type is to be mapped. */
 	Class type() default void.class;

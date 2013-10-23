@@ -28,8 +28,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface Access {
 
-    /**
-     * (Required)  Specification of field- or property-based access.
-     */
-    AccessType value();
+	/**
+	 * (Required)  Specification of field- or property-based access.
+	 */
+	AccessType value();
 }

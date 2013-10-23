@@ -98,40 +98,40 @@ import static javax.persistence.FetchType.LAZY;
 @Retention(RUNTIME)
 public @interface ManyToMany {
 
-    /**
-     * (Optional) The entity class that is the target of the
-     * association. Optional only if the collection-valued
-     * relationship property is defined using Java generics.  Must be
-     * specified otherwise.
-     *
-     * <p> Defaults to the parameterized type of
-     * the collection when defined using generics.
-     */
-    Class targetEntity() default void.class;
+	/**
+	 * (Optional) The entity class that is the target of the
+	 * association. Optional only if the collection-valued
+	 * relationship property is defined using Java generics.  Must be
+	 * specified otherwise.
+	 *
+	 * <p> Defaults to the parameterized type of
+	 * the collection when defined using generics.
+	 */
+	Class targetEntity() default void.class;
 
-    /**
-     * (Optional) The operations that must be cascaded to the target
-     * of the association.
-     *
-     * <p> When the target collection is a {@link java.util.Map
-     * java.util.Map}, the <code>cascade</code> element applies to the
-     * map value.
-     *
-     * <p> Defaults to no operations being cascaded.
-     */
-    CascadeType[] cascade() default {};
+	/**
+	 * (Optional) The operations that must be cascaded to the target
+	 * of the association.
+	 *
+	 * <p> When the target collection is a {@link java.util.Map
+	 * java.util.Map}, the <code>cascade</code> element applies to the
+	 * map value.
+	 *
+	 * <p> Defaults to no operations being cascaded.
+	 */
+	CascadeType[] cascade() default {};
 
-    /** (Optional) Whether the association should be lazily loaded or
-     * must be eagerly fetched. The EAGER strategy is a requirement on
-     * the persistence provider runtime that the associated entities
-     * must be eagerly fetched.  The LAZY strategy is a hint to the
-     * persistence provider runtime.
-     */
-    FetchType fetch() default LAZY;
+	/** (Optional) Whether the association should be lazily loaded or
+	 * must be eagerly fetched. The EAGER strategy is a requirement on
+	 * the persistence provider runtime that the associated entities
+	 * must be eagerly fetched.  The LAZY strategy is a hint to the
+	 * persistence provider runtime.
+	 */
+	FetchType fetch() default LAZY;
 
-    /**
-     * The field that owns the relationship. Required unless
-     * the relationship is unidirectional.
-     */
-    String mappedBy() default "";
+	/**
+	 * The field that owns the relationship. Required unless
+	 * the relationship is unidirectional.
+	 */
+	String mappedBy() default "";
 }

@@ -28,6 +28,6 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface NamedNativeQueries {
 
-    /** (Required) Array of <code>NamedNativeQuery</code> annotations. */
-    NamedNativeQuery[] value ();
+	/** (Required) Array of <code>NamedNativeQuery</code> annotations. */
+	NamedNativeQuery[] value ();
 }
