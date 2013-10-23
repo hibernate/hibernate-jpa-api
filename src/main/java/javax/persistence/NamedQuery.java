@@ -48,27 +48,27 @@ import static javax.persistence.LockModeType.NONE;
 @Retention(RUNTIME)
 public @interface NamedQuery {
 
-    /**
-     * (Required) The name used to refer to the query with the {@link EntityManager}
-     * methods that create query objects.
-     */
-    String name();
+	/**
+	 * (Required) The name used to refer to the query with the {@link EntityManager}
+	 * methods that create query objects.
+	 */
+	String name();
 
-    /** (Required)
-     * The query string in the Java Persistence query language.
-     */
-    String query();
+	/** (Required)
+	 * The query string in the Java Persistence query language.
+	 */
+	String query();
 
-    /**
-     * (Optional) The lock mode type to use in query execution.  If a <code>lockMode</code>
-     * other than <code>LockModeType.NONE</code> is specified, the query must be executed in
-     * a transaction.
-     * @since Java Persistence 2.0
-     */
-    LockModeType lockMode() default NONE;
+	/**
+	 * (Optional) The lock mode type to use in query execution.  If a <code>lockMode</code>
+	 * other than <code>LockModeType.NONE</code> is specified, the query must be executed in
+	 * a transaction.
+	 * @since Java Persistence 2.0
+	 */
+	LockModeType lockMode() default NONE;
 
-    /** (Optional) Query properties and hints.  May include
-     * vendor-specific query hints.
-     */
-    QueryHint[] hints() default {};
+	/** (Optional) Query properties and hints.  May include
+	 * vendor-specific query hints.
+	 */
+	QueryHint[] hints() default {};
 }

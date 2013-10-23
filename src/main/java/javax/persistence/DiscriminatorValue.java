@@ -60,16 +60,16 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface DiscriminatorValue {
 
-    /**
-     * (Optional) The value that indicates that the
-     * row is an entity of the annotated entity type.
-     *
-     * <p> If the <code>DiscriminatorValue</code> annotation is not
-     * specified and a discriminator column is used, a
-     * provider-specific function will be used to generate a value
-     * representing the entity type.  If the <code>DiscriminatorType</code> is
-     * <code>STRING</code>, the discriminator value default is the
-     * entity name.
-     */
-    String value();
+	/**
+	 * (Optional) The value that indicates that the
+	 * row is an entity of the annotated entity type.
+	 *
+	 * <p> If the <code>DiscriminatorValue</code> annotation is not
+	 * specified and a discriminator column is used, a
+	 * provider-specific function will be used to generate a value
+	 * representing the entity type.  If the <code>DiscriminatorType</code> is
+	 * <code>STRING</code>, the discriminator value default is the
+	 * entity name.
+	 */
+	String value();
 }

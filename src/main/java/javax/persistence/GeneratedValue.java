@@ -57,18 +57,18 @@ import static javax.persistence.GenerationType.AUTO;
 
 public @interface GeneratedValue {
 
-    /**
-     * (Optional) The primary key generation strategy
-     * that the persistence provider must use to
-     * generate the annotated entity primary key.
-     */
-    GenerationType strategy() default AUTO;
+	/**
+	 * (Optional) The primary key generation strategy
+	 * that the persistence provider must use to
+	 * generate the annotated entity primary key.
+	 */
+	GenerationType strategy() default AUTO;
 
-    /**
-     * (Optional) The name of the primary key generator
-     * to use as specified in the {@link SequenceGenerator}
-     * or {@link TableGenerator} annotation.
-     * <p> Defaults to the id generator supplied by persistence provider.
-     */
-    String generator() default "";
+	/**
+	 * (Optional) The name of the primary key generator
+	 * to use as specified in the {@link SequenceGenerator}
+	 * or {@link TableGenerator} annotation.
+	 * <p> Defaults to the id generator supplied by persistence provider.
+	 */
+	String generator() default "";
 }

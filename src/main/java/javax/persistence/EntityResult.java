@@ -45,19 +45,19 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface EntityResult {
 
-    /** The class of the result. */
-    Class entityClass();
+	/** The class of the result. */
+	Class entityClass();
 
-    /**
-     * Maps the columns specified in the SELECT list of the
-     * query to the properties or fields of the entity class.
-     */
-    FieldResult[] fields() default {};
+	/**
+	 * Maps the columns specified in the SELECT list of the
+	 * query to the properties or fields of the entity class.
+	 */
+	FieldResult[] fields() default {};
 
-    /**
-     * Specifies the column name (or alias) of the column in
-     * the SELECT list that is used to determine the type of
-     * the entity instance.
-     */
-    String discriminatorColumn() default "";
+	/**
+	 * Specifies the column name (or alias) of the column in
+	 * the SELECT list that is used to determine the type of
+	 * the entity instance.
+	 */
+	String discriminatorColumn() default "";
 }

@@ -17,9 +17,9 @@ package javax.persistence;
  * @since Java Persistence 1.0
  */
 public enum EnumType {
-    /** Persist enumerated type property or field as an integer. */
-    ORDINAL,
+	/** Persist enumerated type property or field as an integer. */
+	ORDINAL,
 
-    /** Persist enumerated type property or field as a string. */
-    STRING
+	/** Persist enumerated type property or field as a string. */
+	STRING
 }

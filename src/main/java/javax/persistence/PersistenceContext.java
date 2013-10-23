@@ -27,26 +27,26 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface PersistenceContext {
 
-    /**
-     * (Optional) The name by which the entity manager is to be accessed in the
-     * environment referencing context; not needed when dependency
-     * injection is used.
-     */
-    String name() default "";
+	/**
+	 * (Optional) The name by which the entity manager is to be accessed in the
+	 * environment referencing context; not needed when dependency
+	 * injection is used.
+	 */
+	String name() default "";
 
-    /**
-     * (Optional) The name of the persistence unit as defined in the
-     * <code>persistence.xml</code> file. If the <code>unitName</code> element is
-     * specified, the persistence unit for the entity manager that is
-     * accessible in JNDI must have the same name.
-     */
-    String unitName() default "";
+	/**
+	 * (Optional) The name of the persistence unit as defined in the
+	 * <code>persistence.xml</code> file. If the <code>unitName</code> element is
+	 * specified, the persistence unit for the entity manager that is
+	 * accessible in JNDI must have the same name.
+	 */
+	String unitName() default "";
 
-    /**
-     * (Optional) Specifies whether a transaction-scoped persistence context
-     * or an extended persistence context is to be used.
-     */
-    PersistenceContextType type() default PersistenceContextType.TRANSACTION;
+	/**
+	 * (Optional) Specifies whether a transaction-scoped persistence context
+	 * or an extended persistence context is to be used.
+	 */
+	PersistenceContextType type() default PersistenceContextType.TRANSACTION;
 
 	/**
 	 * (Optional) Specifies whether the persistence context is always automatically synchronized with the current
@@ -57,11 +57,11 @@ public @interface PersistenceContext {
 	 */
 	SynchronizationType synchronization() default SynchronizationType.SYNCHRONIZED;
 
-    /**
-     * (Optional) Properties for the container or persistence
-     * provider.  Vendor specific properties may be included in this
-     * set of properties.  Properties that are not recognized by
-     * a vendor are ignored.
-     */
-    PersistenceProperty[] properties() default {};
+	/**
+	 * (Optional) Properties for the container or persistence
+	 * provider.  Vendor specific properties may be included in this
+	 * set of properties.  Properties that are not recognized by
+	 * a vendor are ignored.
+	 */
+	PersistenceProperty[] properties() default {};
 }

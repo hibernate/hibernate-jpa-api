@@ -42,6 +42,6 @@ import static javax.persistence.InheritanceType.SINGLE_TABLE;
 
 public @interface Inheritance {
 
-    /** The strategy to be used for the entity inheritance hierarchy. */
-    InheritanceType strategy() default SINGLE_TABLE;
+	/** The strategy to be used for the entity inheritance hierarchy. */
+	InheritanceType strategy() default SINGLE_TABLE;
 }

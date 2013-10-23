@@ -35,11 +35,11 @@ package javax.persistence;
  */
 public enum FlushModeType {
 
-    /** Flushing to occur at transaction commit.  The provider may flush
-     *  at other times, but is not required to.
-     */
+	/** Flushing to occur at transaction commit.  The provider may flush
+	 *  at other times, but is not required to.
+	 */
    COMMIT,
 
-    /** (Default) Flushing to occur at query execution. */
+	/** (Default) Flushing to occur at query execution. */
    AUTO
 }

@@ -51,6 +51,6 @@ import static javax.persistence.EnumType.ORDINAL;
 @Retention(RUNTIME)
 public @interface Enumerated {
 
-    /** (Optional) The type used in mapping an enum type. */
-    EnumType value() default ORDINAL;
+	/** (Optional) The type used in mapping an enum type. */
+	EnumType value() default ORDINAL;
 }

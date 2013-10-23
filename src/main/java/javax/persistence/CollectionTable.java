@@ -97,47 +97,47 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface CollectionTable {
 
-    /**
-     *  (Optional) The name of the collection table.  If not specified,
-     *  it defaults to the concatenation of the name of the containing
-     *  entity and the name of the collection attribute, separated by
-     *  an underscore.
-     */
-    String name() default "";
+	/**
+	 *  (Optional) The name of the collection table.  If not specified,
+	 *  it defaults to the concatenation of the name of the containing
+	 *  entity and the name of the collection attribute, separated by
+	 *  an underscore.
+	 */
+	String name() default "";
 
-    /**
-     *  (Optional) The catalog of the table.  If not specified, the
-     *  default catalog is used.
-     */
-    String catalog() default "";
+	/**
+	 *  (Optional) The catalog of the table.  If not specified, the
+	 *  default catalog is used.
+	 */
+	String catalog() default "";
 
-    /**
-     * (Optional) The schema of the table.  If not specified, the
-     * default schema for the user is used.
-     */
-    String schema() default "";
+	/**
+	 * (Optional) The schema of the table.  If not specified, the
+	 * default schema for the user is used.
+	 */
+	String schema() default "";
 
-    /**
-     *  (Optional) The foreign key columns of the collection table
-     *  which reference the primary table of the entity.  The default
-     *  only applies if a single join column is used.  The default is
-     *  the same as for <code>JoinColumn</code> (i.e., the
-     *  concatenation of the following: the name of the entity; "_";
-     *  the name of the referenced primary key column.) However, if
-     *  there is more than one join column, a <code>JoinColumn</code>
-     *  annotation must be specified for each join column using the
-     *  <code>JoinColumns</code> annotation.  In this case, both the
-     *  <code>name</code> and the <code>referencedColumnName</code>
-     *  elements must be specified in each such
-     *  <code>JoinColumn</code> annotation.
-     */
-     JoinColumn[] joinColumns() default {};
+	/**
+	 *  (Optional) The foreign key columns of the collection table
+	 *  which reference the primary table of the entity.  The default
+	 *  only applies if a single join column is used.  The default is
+	 *  the same as for <code>JoinColumn</code> (i.e., the
+	 *  concatenation of the following: the name of the entity; "_";
+	 *  the name of the referenced primary key column.) However, if
+	 *  there is more than one join column, a <code>JoinColumn</code>
+	 *  annotation must be specified for each join column using the
+	 *  <code>JoinColumns</code> annotation.  In this case, both the
+	 *  <code>name</code> and the <code>referencedColumnName</code>
+	 *  elements must be specified in each such
+	 *  <code>JoinColumn</code> annotation.
+	 */
+	 JoinColumn[] joinColumns() default {};
 
-    /**
-     * (Optional) Unique constraints that are to be placed on the
-     * table.  These are only used if table generation is in effect.
-     */
-    UniqueConstraint[] uniqueConstraints() default {};
+	/**
+	 * (Optional) Unique constraints that are to be placed on the
+	 * table.  These are only used if table generation is in effect.
+	 */
+	UniqueConstraint[] uniqueConstraints() default {};
 
 	/**
 	 * (Optional) Indexes for the table. These are only used if table generation is in effect.

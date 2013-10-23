@@ -62,9 +62,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 public @interface AssociationOverrides {
 
-    /**
-     *(Required) The association override mappings that are to be
-     * applied to the relationship field or property .
-     */
-    AssociationOverride[] value();
+	/**
+	 *(Required) The association override mappings that are to be
+	 * applied to the relationship field or property .
+	 */
+	AssociationOverride[] value();
 }

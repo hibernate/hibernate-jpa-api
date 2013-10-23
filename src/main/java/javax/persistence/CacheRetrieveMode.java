@@ -19,16 +19,16 @@ package javax.persistence;
  */
 public enum CacheRetrieveMode {
 
-    /**
-     * Read entity data from the cache: this is
-     * the default behavior.
-     */
-    USE,
+	/**
+	 * Read entity data from the cache: this is
+	 * the default behavior.
+	 */
+	USE,
 
-    /**
-     * Bypass the cache: get data directly from
-     * the database.
-     */
-    BYPASS
+	/**
+	 * Bypass the cache: get data directly from
+	 * the database.
+	 */
+	BYPASS
 }
 

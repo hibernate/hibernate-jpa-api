@@ -56,21 +56,21 @@ import static javax.persistence.FetchType.EAGER;
 @Retention(RUNTIME)
 public @interface Basic {
 
-    /**
-     * (Optional) Defines whether the value of the field or property should
-     * be lazily loaded or must be eagerly fetched. The <code>EAGER</code>
-     * strategy is a requirement on the persistence provider runtime
-     * that the value must be eagerly fetched.  The <code>LAZY</code>
-     * strategy is a hint to the persistence provider runtime.
-     * If not specified, defaults to <code>EAGER</code>.
-     */
-    FetchType fetch() default EAGER;
+	/**
+	 * (Optional) Defines whether the value of the field or property should
+	 * be lazily loaded or must be eagerly fetched. The <code>EAGER</code>
+	 * strategy is a requirement on the persistence provider runtime
+	 * that the value must be eagerly fetched.  The <code>LAZY</code>
+	 * strategy is a hint to the persistence provider runtime.
+	 * If not specified, defaults to <code>EAGER</code>.
+	 */
+	FetchType fetch() default EAGER;
 
-    /**
-     * (Optional) Defines whether the value of the field or property may be null.
-     * This is a hint and is disregarded for primitive types; it may
-     * be used in schema generation.
-     * If not specified, defaults to <code>true</code>.
-     */
-    boolean optional() default true;
+	/**
+	 * (Optional) Defines whether the value of the field or property may be null.
+	 * This is a hint and is disregarded for primitive types; it may
+	 * be used in schema generation.
+	 * If not specified, defaults to <code>true</code>.
+	 */
+	boolean optional() default true;
 }

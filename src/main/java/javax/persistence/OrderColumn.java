@@ -67,9 +67,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface OrderColumn {
 
 	/** (Optional) The name of the ordering column.
-         *  Defaults to the concatenation of the name of the
-         *  referencing property or field; "_"; "ORDER".
-         */
+	 *  Defaults to the concatenation of the name of the
+	 *  referencing property or field; "_"; "ORDER".
+	 */
 	String name() default "";
 
 	/** (Optional) Whether the database column is nullable. */

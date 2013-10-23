@@ -58,6 +58,6 @@ import static javax.persistence.EnumType.ORDINAL;
 @Target({METHOD, FIELD}) @Retention(RUNTIME)
 public @interface MapKeyEnumerated {
 
-    /** (Optional) The type used in mapping a map key enum type. */
-    EnumType value() default ORDINAL;
+	/** (Optional) The type used in mapping a map key enum type. */
+	EnumType value() default ORDINAL;
 }

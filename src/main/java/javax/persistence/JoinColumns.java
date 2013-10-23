@@ -43,10 +43,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Retention(RUNTIME)
 public @interface JoinColumns {
 
-    /**
-     * The join columns that map the relationship.
-     */
-    JoinColumn[] value();
+	/**
+	 * The join columns that map the relationship.
+	 */
+	JoinColumn[] value();
 
 	/**
 	 * (Optional) The foreign key constraint specification for the join columns. This is used only if table
