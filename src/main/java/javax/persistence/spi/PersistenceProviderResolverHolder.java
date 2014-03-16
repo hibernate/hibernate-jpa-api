@@ -18,7 +18,7 @@ import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.WeakHashMap;
@@ -126,7 +126,7 @@ public class PersistenceProviderResolverHolder {
 				synchronized ( resolverClasses ) {
 					try {
 						Enumeration<URL> resources = cl.getResources( "META-INF/services/" + PersistenceProvider.class.getName() );
-						Set<String> names = new HashSet<String>();
+						Set<String> names = new LinkedHashSet<String>();
 						while ( resources.hasMoreElements() ) {
 							URL url = resources.nextElement();
 							InputStream is = url.openStream();
@@ -201,7 +201,7 @@ public class PersistenceProviderResolverHolder {
 			private static final Pattern nonCommentPattern = Pattern.compile( "^([^#]+)" );
 
 			private static Set<String> providerNamesFromReader(BufferedReader reader) throws IOException {
-				Set<String> names = new HashSet<String>();
+				Set<String> names = new LinkedHashSet<String>();
 				String line;
 				while ( ( line = reader.readLine() ) != null ) {
 					line = line.trim();
