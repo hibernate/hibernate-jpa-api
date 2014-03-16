@@ -137,21 +137,20 @@ public class PersistenceProviderResolverHolder {
 								is.close();
 							}
 						}
+						List<WeakReference<Class<? extends PersistenceProvider>>> nonHibernateClasses = new ArrayList<WeakReference<Class<? extends PersistenceProvider>>>();
 						for ( String s : names ) {
 							@SuppressWarnings( "unchecked" )
 							Class<? extends PersistenceProvider> providerClass = (Class<? extends PersistenceProvider>) cl.loadClass( s );
 							WeakReference<Class<? extends PersistenceProvider>> reference
 									= new WeakReference<Class<? extends PersistenceProvider>>(providerClass);
 							//keep Hibernate atop
-							if ( s.endsWith( "HibernatePersistence" ) && resolverClasses.size() > 0 ) {
-								WeakReference<Class<? extends PersistenceProvider>> movedReference = resolverClasses.get( 0 );
-								resolverClasses.add( 0, reference );
-								resolverClasses.add( movedReference );
-							}
-							else {
+							if ( s.startsWith("org.hibernate") ) {
 								resolverClasses.add( reference );
+							} else {
+								nonHibernateClasses.add( reference );
 							}
 						}
+						resolverClasses.addAll( nonHibernateClasses );
 					}
 					catch ( IOException e ) {
 						throw new PersistenceException( e );
