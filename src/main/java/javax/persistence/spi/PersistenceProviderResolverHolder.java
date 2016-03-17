@@ -143,10 +143,8 @@ public class PersistenceProviderResolverHolder {
 							WeakReference<Class<? extends PersistenceProvider>> reference
 									= new WeakReference<Class<? extends PersistenceProvider>>(providerClass);
 							//keep Hibernate atop
-							if ( s.endsWith( "HibernatePersistence" ) && resolverClasses.size() > 0 ) {
-								WeakReference<Class<? extends PersistenceProvider>> movedReference = resolverClasses.get( 0 );
+							if ( s.endsWith( "HibernatePersistenceProvider" ) ) {
 								resolverClasses.add( 0, reference );
-								resolverClasses.add( movedReference );
 							}
 							else {
 								resolverClasses.add( reference );
