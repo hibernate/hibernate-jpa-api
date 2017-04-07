@@ -29,7 +29,7 @@ public interface EntityManagerFactory {
 
     /**
      * Create a new application-managed <code>EntityManager</code>.  This method returns a new
-	 * code>EntityManager</code> instance each time it is invoked.  The <code>isOpen</code> method will return true
+	 * <code>EntityManager</code> instance each time it is invoked.  The <code>isOpen</code> method will return true
 	 * on the returned instance.
 	 *
      * @return entity manager instance
