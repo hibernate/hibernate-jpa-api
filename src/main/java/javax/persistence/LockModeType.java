@@ -129,7 +129,7 @@ public enum LockModeType {
 
     /**
      *  Synonymous with <code>OPTIMISTIC_FORCE_INCREMENT</code>.
-     *  <code>OPTIMISTIC_FORCE_IMCREMENT</code> is to be preferred for new
+     *  <code>OPTIMISTIC_FORCE_INCREMENT</code> is to be preferred for new
      *  applications.
      *
      */
