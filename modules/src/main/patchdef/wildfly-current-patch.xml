@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<patch-config xmlns="urn:jboss:patch-config:1.0">
+    <name>wildfly-11.0.0.Final-persistence-api-2.2-1.0.0-SNAPSHOT</name>
+    <description>This patch upgrades a WildFly 11.0.0.Final installation to JPA 2.2 APIs</description>
+    <element patch-id="layer-base-wildfly-11.0.0.Final-persistence-api-2.2-1.0.0-SNAPSHOT">
+        <one-off name="base" />
+        <description>This patch upgrades a WildFly 11.0.0.Final installation to JPA 2.2 APIs</description>
+        <specified-content>
+            <modules>
+                <updated name="javax.persistence.api" />
+            </modules>
+        </specified-content>
+    </element>
+    <specified-content/>
+</patch-config>

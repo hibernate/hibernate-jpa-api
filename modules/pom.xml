@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<groupId>org.hibernate.javax.persistence</groupId>
+		<artifactId>hibernate-jpa-api-parent</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>hibernate-jpa-api-2.2-wildflymodules</artifactId>
+	<packaging>pom</packaging>
+
+	<name>Hibernate JPA API WildFly Modules</name>
+	<description>Patch file for WildFly to upgrade its JPA version</description>
+
+	<properties>
+		<patchdef.xml>src/main/patchdef/wildfly-current-patch.xml</patchdef.xml>
+
+		<!-- WildFly current -->
+		<wildfly.original.target-dir>${project.build.directory}/wildfly-original/wildfly-${wildfly.version}</wildfly.original.target-dir>
+		<wildfly.patched.target-dir>${project.build.directory}/wildfly-patched/wildfly-${wildfly.version}</wildfly.patched.target-dir>
+		<wildfly.patch-file>${project.build.directory}/wildfly-jpa-2.2-patch.zip</wildfly.patch-file>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.wildfly</groupId>
+			<artifactId>wildfly-dist</artifactId>
+			<version>${wildfly.version}</version>
+			<scope>provided</scope>
+			<type>tar.gz</type>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<!-- Extract WildFly -->
+					<execution>
+						<id>unpack-wildfly</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.wildfly</groupId>
+									<artifactId>wildfly-dist</artifactId>
+									<version>${wildfly.version}</version>
+									<type>tar.gz</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${project.build.directory}/wildfly-original</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+					<!-- Update the API JARs in the second WildFly copy N.B. the second
+						WildFly copy will be created later below, at this point we're only copying
+						the new jar into the right structure -->
+					<execution>
+						<id>prepare-patch-jars</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>javax.persistence</groupId>
+									<artifactId>javax.persistence-api</artifactId>
+									<version>${jpa-api.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${wildfly.patched.target-dir}/modules/system/layers/base/javax/persistence/api/main</outputDirectory>
+									<!-- Specifying name to avoid breaking the module if the pattern changes -->
+									<destFileName>javax.persistence-api-${jpa-api.version}.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>create-patched-wildfly-dist</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${project.build.directory}/wildfly-original</directory>
+									<excludes>
+										<exclude>**/modules/system/layers/base/javax/persistence/api/main/*</exclude>
+									</excludes>
+								</resource>
+							</resources>
+							<outputDirectory>${project.build.directory}/wildfly-patched</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>modules</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>src/main/module</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+							<outputDirectory>${wildfly.patched.target-dir}/modules/system/layers/base/javax/persistence/api/main</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Create the patch file, based on the diff of the original WF and the updated one -->
+			<plugin>
+				<groupId>org.jboss.as</groupId>
+				<artifactId>patch-gen-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>create-wildfly-current-patch-file</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>generate-patch</goal>
+						</goals>
+						<configuration>
+							<appliesToDist>${wildfly.original.target-dir}</appliesToDist>
+							<patchConfig>${patchdef.xml}</patchConfig>
+							<updatedDist>${wildfly.patched.target-dir}</updatedDist>
+							<outputFile>${wildfly.patch-file}</outputFile>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<!-- attach the created patch file to the build so it gets installed and deployed -->
+					<execution>
+						<id>attach-artifacts</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attach-artifact</goal>
+						</goals>
+						<configuration>
+							<artifacts>
+								<artifact>
+									<file>${wildfly.patch-file}</file>
+									<type>zip</type>
+									<classifier>wildfly-${wildfly.version}-patch</classifier>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

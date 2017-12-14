@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.hibernate.javax.persistence</groupId>
+	<artifactId>hibernate-jpa-api-parent</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Hibernate distribution of JPA API</name>
+	<url>http://hibernate.org</url>
+	<description>Distribution package for the JPA API</description>
+
+	<prerequisites>
+		<maven>3.5.0</maven>
+	</prerequisites>
+
+	<mailingLists>
+		<mailingList>
+			<name>hibernate-dev</name>
+			<post>hibernate-dev@lists.jboss.org</post>
+		</mailingList>
+	</mailingLists>
+
+	<modules>
+		<module>relocation</module>
+		<module>modules</module>
+	</modules>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+		<!-- Target WildFly version to produce a patch file -->
+		<wildfly.version>11.0.0.Final</wildfly.version>
+
+		<jpa-api.version>2.2</jpa-api.version>
+
+		<!-- WildFly patching infrastructure -->
+		<wildfly-patch-gen-maven-plugin.version>2.0.1.Alpha5</wildfly-patch-gen-maven-plugin.version>
+		<wildfly-patch-gen-maven-plugin.woodstox.version>5.0.3</wildfly-patch-gen-maven-plugin.woodstox.version>
+		<wildfly-maven-plugin.version>1.2.1.Final</wildfly-maven-plugin.version>
+		<wildfly-core.version>3.0.10.Final</wildfly-core.version>
+
+		<!-- Test dependencies -->
+		<arquillian.version>1.1.11.Final</arquillian.version>
+	</properties>
+
+	<licenses>
+		<license>
+			<name>Eclipse Distribution License - v 1.0</name>
+			<url>https://www.eclipse.org/org/documents/edl-v10.php</url>
+		</license>
+	</licenses>
+
+	<scm>
+		<connection>scm:git:git://github.com/hibernate/hibernate-jpa-api.git</connection>
+		<developerConnection>scm:git:git@github.com:hibernate/hibernate-jpa-api.git</developerConnection>
+		<url>http://github.com/hibernate/hibernate-jpa-api</url>
+		<tag>HEAD</tag>
+	</scm>
+
+	<developers>
+		<developer>
+			<id>sannegrinovero</id>
+			<name>Sanne Grinovero</name>
+			<email>sanne@hibernate.org</email>
+			<organization>Red Hat, Inc.</organization>
+			<url>http://in.relation.to/sanne-grinovero/</url>
+		</developer>
+	</developers>
+
+	<distributionManagement>
+		<repository>
+			<id>jboss-releases-repository</id>
+			<name>JBoss Releases Repository</name>
+			<url>https://repository.jboss.org/nexus/service/local/staging/deploy/maven2/</url>
+		</repository>
+		<snapshotRepository>
+			<id>jboss-snapshots-repository</id>
+			<name>JBoss Snapshots Repository</name>
+			<url>https://repository.jboss.org/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+	<organization>
+		<name>Hibernate</name>
+		<url>http://hibernate.org</url>
+	</organization>
+
+	<issueManagement>
+		<system>JIRA</system>
+		<url>https://hibernate.atlassian.net</url>
+	</issueManagement>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>javax.persistence</groupId>
+				<artifactId>javax.persistence-api</artifactId>
+				<version>${jpa-api.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>3.0.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-dependency-plugin</artifactId>
+					<version>3.0.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-install-plugin</artifactId>
+					<version>2.5.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>3.1.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-release-plugin</artifactId>
+					<version>2.5.3</version>
+					<configuration>
+						<preparationGoals>clean install</preparationGoals>
+						<autoVersionSubmodules>true</autoVersionSubmodules>
+						<allowTimestampedSnapshots>true</allowTimestampedSnapshots>
+						<pushChanges>false</pushChanges>
+						<localCheckout>true</localCheckout>
+						<tagNameFormat>@{project.version}</tagNameFormat>
+					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>3.0.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>3.0.0</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.2</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.6</version>
+				</plugin>
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>3.0.2</version>
+					<configuration>
+						<!-- By default the "@" character is a delimiter, causing files containing 
+							that character to not be filtered properly -->
+						<useDefaultDelimiters>false</useDefaultDelimiters>
+						<delimiters>
+							<delimiter>${*}</delimiter>
+						</delimiters>
+					</configuration>
+				</plugin>
+				<!-- WildFly patching infrastructure plugins -->
+				<plugin>
+					<groupId>org.jboss.as</groupId>
+					<artifactId>patch-gen-maven-plugin</artifactId>
+					<version>${wildfly-patch-gen-maven-plugin.version}</version>
+					<dependencies>
+						<dependency>
+							<groupId>com.fasterxml.woodstox</groupId>
+							<artifactId>woodstox-core</artifactId>
+							<version>${wildfly-patch-gen-maven-plugin.woodstox.version}</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+				<plugin>
+					<groupId>org.wildfly.plugins</groupId>
+					<artifactId>wildfly-maven-plugin</artifactId>
+					<version>${wildfly-maven-plugin.version}</version>
+					<dependencies>
+						<!-- Contains the patch command -->
+						<dependency>
+							<groupId>org.wildfly.core</groupId>
+							<artifactId>wildfly-patching</artifactId>
+							<version>${wildfly-core.version}</version>
+						</dependency>
+						<!-- The exclusion is needed to have the build work with JDK 9 -->
+						<dependency>
+							<groupId>org.wildfly.core</groupId>
+							<artifactId>wildfly-cli</artifactId>
+							<version>${wildfly-core.version}</version>
+							<exclusions>
+								<exclusion>
+									<groupId>sun.jdk</groupId>
+									<artifactId>jconsole</artifactId>
+								</exclusion>
+							</exclusions>
+						</dependency>
+					</dependencies>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
