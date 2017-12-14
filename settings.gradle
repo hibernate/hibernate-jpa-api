@@ -1,2 +1,0 @@
-gradle.ext.jpaVersion = "2.1"
-rootProject.name = "hibernate-jpa-${gradle.ext.jpaVersion}-api"
