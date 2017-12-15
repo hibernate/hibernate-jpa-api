@@ -10,7 +10,7 @@
 	<artifactId>hibernate-jpa-2.2-api</artifactId>
 	<packaging>pom</packaging>
 
-	<name>Hibernate JPA API Relocation Artifacts</name>
+	<name>Hibernate JPA 2.2 API Relocation Artifacts</name>
 
 	<distributionManagement>
 		<relocation>

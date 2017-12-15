@@ -10,8 +10,8 @@
 	<artifactId>hibernate-jpa-api-2.2-wildflymodules</artifactId>
 	<packaging>pom</packaging>
 
-	<name>Hibernate JPA API WildFly Modules</name>
-	<description>Patch file for WildFly to upgrade its JPA version</description>
+	<name>Hibernate JPA 2.2 API WildFly Modules</name>
+	<description>Patch file for WildFly to upgrade its JPA API version to 2.2</description>
 
 	<properties>
 		<patchdef.xml>src/main/patchdef/wildfly-current-patch.xml</patchdef.xml>
