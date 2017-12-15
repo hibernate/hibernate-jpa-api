@@ -14,4 +14,10 @@ See http://java.net/projects/jpa-spec/downloads for drafts used to create them.
 The current "master" branch is going to be repurposed to publish Maven Relocation artifacts so to help everyone to migrate to
 the standard APIs.
 
+Reminder about the release process:
+
+> mvn -B release:clean release:prepare release:perform -Dtag=JPA2.2_[version] -DreleaseVersion=version -DdevelopmentVersion=Z
+> git push upstream HEAD
+> git push upstream <tag name>
+
 
