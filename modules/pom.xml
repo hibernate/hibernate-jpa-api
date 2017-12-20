@@ -14,12 +14,18 @@
 	<description>Patch file for WildFly to upgrade its JPA API version to 2.2</description>
 
 	<properties>
-		<patchdef.xml>src/main/patchdef/wildfly-current-patch.xml</patchdef.xml>
-
+		<wildfly.original.parent-dir>${project.build.directory}/wildfly-original</wildfly.original.parent-dir>
+		<wildfly.patched.parent-dir>${project.build.directory}/wildfly-patched</wildfly.patched.parent-dir>
 		<!-- WildFly current -->
-		<wildfly.original.target-dir>${project.build.directory}/wildfly-original/wildfly-${wildfly.version}</wildfly.original.target-dir>
-		<wildfly.patched.target-dir>${project.build.directory}/wildfly-patched/wildfly-${wildfly.version}</wildfly.patched.target-dir>
-		<wildfly.patch-file>${project.build.directory}/wildfly-jpa-2.2-patch.zip</wildfly.patch-file>
+		<patchdef.xml>src/main/patchdef/wildfly-current-patch.xml</patchdef.xml>
+		<wildfly.original.target-dir>${wildfly.original.parent-dir}/wildfly-${wildfly.version}</wildfly.original.target-dir>
+		<wildfly.patched.target-dir>${wildfly.patched.parent-dir}/wildfly-${wildfly.version}</wildfly.patched.target-dir>
+		<wildfly.patch-file>${project.build.directory}/wildfly-${wildfly.version}-jpa-2.2-patch.zip</wildfly.patch-file>
+		<!-- WildFly next -->
+		<patchdef-next.xml>src/main/patchdef/wildfly-current-patch.xml</patchdef-next.xml>
+		<wildfly-next.original.target-dir>${project.build.directory}/wildfly-original/wildfly-${wildfly-next.version}</wildfly-next.original.target-dir>
+		<wildfly-next.patched.target-dir>${project.build.directory}/wildfly-patched/wildfly-${wildfly-next.version}</wildfly-next.patched.target-dir>
+		<wildfly-next.patch-file>${project.build.directory}/wildfly-${wildfly-next.version}-jpa-2.2-patch.zip</wildfly-next.patch-file>
 	</properties>
 
 	<dependencies>
@@ -27,13 +33,6 @@
 			<groupId>javax.persistence</groupId>
 			<artifactId>javax.persistence-api</artifactId>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.wildfly</groupId>
-			<artifactId>wildfly-dist</artifactId>
-			<version>${wildfly.version}</version>
-			<scope>provided</scope>
-			<type>tar.gz</type>
 		</dependency>
 	</dependencies>
 
@@ -44,7 +43,7 @@
 				<executions>
 					<!-- Extract WildFly -->
 					<execution>
-						<id>unpack-wildfly</id>
+						<id>unpack-wildfly-current</id>
 						<phase>generate-resources</phase>
 						<goals>
 							<goal>unpack</goal>
@@ -57,7 +56,26 @@
 									<version>${wildfly.version}</version>
 									<type>tar.gz</type>
 									<overWrite>false</overWrite>
-									<outputDirectory>${project.build.directory}/wildfly-original</outputDirectory>
+									<outputDirectory>${wildfly.original.parent-dir}</outputDirectory>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
+					<execution>
+						<id>unpack-wildfly-next</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>unpack</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>org.wildfly</groupId>
+									<artifactId>wildfly-dist</artifactId>
+									<version>${wildfly-next.version}</version>
+									<type>tar.gz</type>
+									<overWrite>false</overWrite>
+									<outputDirectory>${wildfly.original.parent-dir}</outputDirectory>
 								</artifactItem>
 							</artifactItems>
 						</configuration>
@@ -66,7 +84,7 @@
 						WildFly copy will be created later below, at this point we're only copying
 						the new jar into the right structure -->
 					<execution>
-						<id>prepare-patch-jars</id>
+						<id>prepare-wildfly-current-patch-jars</id>
 						<phase>prepare-package</phase>
 						<goals>
 							<goal>copy</goal>
@@ -85,6 +103,26 @@
 							</artifactItems>
 						</configuration>
 					</execution>
+					<execution>
+						<id>prepare-wildfly-next-patch-jars</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>copy</goal>
+						</goals>
+						<configuration>
+							<artifactItems>
+								<artifactItem>
+									<groupId>javax.persistence</groupId>
+									<artifactId>javax.persistence-api</artifactId>
+									<version>${jpa-api.version}</version>
+									<overWrite>false</overWrite>
+									<outputDirectory>${wildfly-next.patched.target-dir}/modules/system/layers/base/javax/persistence/api/main</outputDirectory>
+									<!-- Specifying name to avoid breaking the module if the pattern changes -->
+									<destFileName>javax.persistence-api-${jpa-api.version}.jar</destFileName>
+								</artifactItem>
+							</artifactItems>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 
@@ -92,7 +130,7 @@
 				<artifactId>maven-resources-plugin</artifactId>
 				<executions>
 					<execution>
-						<id>create-patched-wildfly-dist</id>
+						<id>create-patched-wildfly-current-dist</id>
 						<phase>generate-resources</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -100,17 +138,35 @@
 						<configuration>
 							<resources>
 								<resource>
-									<directory>${project.build.directory}/wildfly-original</directory>
+									<directory>${wildfly.original.target-dir}</directory>
 									<excludes>
 										<exclude>**/modules/system/layers/base/javax/persistence/api/main/*</exclude>
 									</excludes>
 								</resource>
 							</resources>
-							<outputDirectory>${project.build.directory}/wildfly-patched</outputDirectory>
+							<outputDirectory>${wildfly.patched.target-dir}</outputDirectory>
 						</configuration>
 					</execution>
 					<execution>
-						<id>modules</id>
+						<id>create-patched-wildfly-next-dist</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>${wildfly-next.original.target-dir}</directory>
+									<excludes>
+										<exclude>**/modules/system/layers/base/javax/persistence/api/main/*</exclude>
+									</excludes>
+								</resource>
+							</resources>
+							<outputDirectory>${wildfly-next.patched.target-dir}</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>add-overridden-modules-to-patched-wildfly-current-dist</id>
 						<phase>generate-resources</phase>
 						<goals>
 							<goal>copy-resources</goal>
@@ -123,6 +179,22 @@
 								</resource>
 							</resources>
 							<outputDirectory>${wildfly.patched.target-dir}/modules/system/layers/base/javax/persistence/api/main</outputDirectory>
+						</configuration>
+					</execution>
+					<execution>
+						<id>add-overridden-modules-to-patched-wildfly-next-dist</id>
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>src/main/module</directory>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+							<outputDirectory>${wildfly-next.patched.target-dir}/modules/system/layers/base/javax/persistence/api/main</outputDirectory>
 						</configuration>
 					</execution>
 				</executions>
@@ -146,6 +218,19 @@
 							<outputFile>${wildfly.patch-file}</outputFile>
 						</configuration>
 					</execution>
+					<execution>
+						<id>create-wildfly-next-patch-file</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>generate-patch</goal>
+						</goals>
+						<configuration>
+							<appliesToDist>${wildfly-next.original.target-dir}</appliesToDist>
+							<patchConfig>${patchdef-next.xml}</patchConfig>
+							<updatedDist>${wildfly-next.patched.target-dir}</updatedDist>
+							<outputFile>${wildfly-next.patch-file}</outputFile>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 
@@ -166,6 +251,11 @@
 									<file>${wildfly.patch-file}</file>
 									<type>zip</type>
 									<classifier>wildfly-${wildfly.version}-patch</classifier>
+								</artifact>
+								<artifact>
+									<file>${wildfly-next.patch-file}</file>
+									<type>zip</type>
+									<classifier>wildfly-${wildfly-next.version}-patch</classifier>
 								</artifact>
 							</artifacts>
 						</configuration>
