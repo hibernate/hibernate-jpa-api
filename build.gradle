@@ -58,6 +58,9 @@ jar {
         instruction 'Implementation-Version', version
         instruction 'Implementation-Vendor', 'hibernate.org'
         instruction 'Implementation-Title', 'Java Persistence API'
+
+        //Jigsaw module name, matching the JPA spec:
+        instruction 'Automatic-Module-Name', 'java.persistence'
     }
 }
 
